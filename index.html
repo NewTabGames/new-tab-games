@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Tab Games</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      background-color: #0a0a0a;
+      color: #e0ffe0;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #111;
+      padding: 20px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow-y: auto;
+      border-right: 2px solid #00ff66;
+    }
+    .sidebar h2 {
+      color: #00ff66;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 10px;
+      color: #e0ffe0;
+      text-decoration: none;
+      margin-bottom: 10px;
+      border: 1px solid #00ff66;
+      border-radius: 6px;
+      transition: background 0.3s, color 0.3s;
+    }
+    .sidebar a:hover {
+      background-color: #00ff66;
+      color: #111;
+    }
+    .content {
+      margin-left: 240px;
+      padding: 40px;
+      flex: 1;
+      text-align: center;
+    }
+    h1 {
+      color: #00ff66;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 10px;
+      background-color: #00ff66;
+      color: #111;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background-color: #00cc55;
+    }
+    footer {
+      margin-top: 50px;
+      font-size: 14px;
+      color: #888;
+    }
+    pre {
+      text-align: left;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>New Tab Games</h2>
+    <a href="#" onclick="showPage('home')">Home</a>
+    <a href="#" onclick="showPage('updates')">Update Log</a>
+    <a href="#" onclick="showPage('websites')">Game Websites</a>
+    <a href="#" onclick="showPage('tabcloaker')">Tab Cloaker</a>
+    <a href="#" onclick="showPage('freeminecraft')">Free Minecraft</a>
+  </div>
+
+  <div class="content">
+    <!-- Home -->
+    <div id="home" class="page">
+      <h1>Welcome</h1>
+      <p>
+        Collection of Unblocked Games & Links for Websites. If you find anything, please send it in!<br><br>
+        Can't block this one : )
+      </p>
+      <a class="btn" href="https://forms.gle/spFAscDro1LyfyF68" target="_blank">Request a New Game</a>
+    </div>
+
+    <!-- Updates -->
+    <div id="updates" class="page" style="display:none;">
+      <h1>Update Log</h1>
+      <pre>
+Legacy Update 9/15/22 First Ever v1
+This was the creation date of the first website I have ever made. Rest in peace, "TI-84 Plus CE Calculator"
+(Mind you this is NOT the same website. This current website is 3rd in the series I have made. The 2nd series was, "English Project" which later died to the takedown of JavaScript. This included Embedding and Bookmarks.)
+11/25/24 - v1.0.0
+Created the website with all of the doc links.
+Updated "Free Minecraft"
+11/26/24 - v1.0.1
+Added Light Mode - Removed
+Added Slope
+12/1/24 - v1.0.2
+Fixed Infinite Craft
+Removed Light Mode because its useless. Just use dark mode.
+12/2/24 - v1.0.3
+Updated Free Minecraft
+Added Panic Button
+12/4/24 - v2.0.3 (Large Update)
+Added Block Blast
+Added a TON of nice game websites
+Updated Free Minecraft
+Added AdVenture Capitalist
+Added Goomy Clicker 2
+Added Incremental RPG
+Added Number Wordle
+Added so many Game Websites.
+12/11/24 - v3.0.3 (Large Update)
+Added Unblockable Games
+Added Solitaire
+Added Pacman Doodle
+Funny Ford Driving Skill Games
++3 New Game Websites (Including Retro Games)
+Added Stone Age Clicker (Interesting)
+Added Santa Clicker for christmas :)
+Added Madalin Stunt Cars 2
++ Minor Adjustments
+Added Drive On Google Maps
+1/8/25 - v3.1.3 (First update of 2025!)
+Infinite Craft has an expired website certificate. Wait for renewal.
+Updated Free Minecraft
+Added Free Movies (Added via request form, Thanks!)
+Added WebGlMath (Added via request form, Thanks!)
+Added Fluid Simulation.
+1/12/25 - v3.1.4
+Infinite Craft is back and working.
+Added Link Removal to let me know about any websites that don't work or are blocked.
+1/14/25 - v3.2.4
+Added City Clicker (Interesting)
+Added Sequencer. (Try it)
+Tweaked some little things.
+1/15/25 - v4.2.4
+Added Silvereen (Moonlight)
+Added an extremely powerful website. (Szvy Central V2)
+Added a gmail to contact
+Made the Panic Button redirect to Gmail instead.
+(Makes it so that schools that don't use schoology have a working panic button.)
+Tweaked some things. (Home page and Update Log)
+1/16/25 - v4.2.5
+Added GuitarFlash (Submitted via Game Request, Thanks!)
+1/22/25 - v4.2.6
+Updated Free Minecraft
+1/24/25 - v4.2.7
+Rip Szvy Central :(
+1/31/25 - v4.2.8
+Added plinko (gambling)
+2/3/25 - v4.2.9
+Added drift hunters
+2/6/25 - v4.3.9
+Added gambling.
+Added Arras.io
+3/6/25 - v4.4.0
+Infinite Craft Blocked 😔
+All gambling is blocked. If you find anything, PLEASE send it in. (I do NOT have a crippling gambling addiction)
+3/13/25 - v4.4.1
+BlackJack is back!!! Have fun gambling guys.
+3/31/25 - v4.4.2
+I added a page, "My Unity Games" which will have links to games I made. There's only 1 right now. Version 2 of that is in the making. Anyways enjoy.  - REMOVED
+4/2/25 - v4.4.3
+New link for protection.
+4/7/25 - v4.4.4
+Added an about:blank cloaker.
+Removed some blocked websites.
+4/9/25 - v4.4.5
+Updated Free Minecraft
+4/10/25 - v4.4.6
+Added Billy Bob Games.
+4/11/25 - v4.4.7
+Added Minesweeper
+Cool Math Games is unblocked..
+4/21/25 - v4.5.7
+Removed all blocked games.
+9/30/25 - v5.0.0
+Created this website
+- Revamped Everything
+      </pre>
+    </div>
+
+    <!-- Websites -->
+    <div id="websites" class="page" style="display:none;">
+      <h1>Game Websites</h1>
+      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank">Anything Blocked? (Link Removal)</a>
+      <a class="btn" href="https://sites.google.com/view/harmony-school-of-innovation/home" target="_blank">Unblocked Games</a>
+      <a class="btn" href="https://sites.google.com/view/cyberlabs/home" target="_blank">Cyber City</a>
+      <a class="btn" href="https://nb-ga.github.io/games-site/" target="_blank">Nb-ga Games</a>
+      <a class="btn" href="https://arras.netlify.app/#ed2261" target="_blank">Arras.io</a>
+      <a class="btn" href="https://getbutterfly.com/fun/google-maps-driving-simulator/" target="_blank">Drive on Google Maps</a>
+      <a class="btn" href="https://www.interactive.onlinemathlearning.com/fun_minesweeper.php" target="_blank">Minesweeper</a>
+      <a class="btn" href="https://www.lumpty.com/amusements/games/tetris/tetris.html" target="_blank">Tetris</a>
+      <a class="btn" href="https://www.google.com/logos/fnbx/solitaire/standalone.html" target="_blank">Solitare</a>
+      <a class="btn" href="https://www.worldguessr.com/" target="_blank">GeoGuessr</a>
+      <a class="btn" href="https://noclip.website/" target="_blank">Noclip.site</a>
+      <a class="btn" href="https://www.google.com/logos/2019/july4th19/r6/july4th19.html" target="_blank">Google Baseball</a>
+      <a class="btn" href="https://quickdraw.withgoogle.com/" target="_blank">Quick Draw</a>
+      <a class="btn" href="https://neal-fun.firebaseapp.com/" target="_blank">Ripoff Neal.fun</a>
+      <a class="btn" href="https://www.fusiondex.org/" target="_blank">FusionDex</a>
+      <a class="btn" href="https://littlealchemy.com/" target="_blank">Little Alchemy 1</a>
+      <a class="btn" href="https://littlealchemy2.com/" target="_blank">Little Alchemy 2</a>
+      <a class="btn" href="https://makereal.tldraw.com/" target="_blank">MakeReal (Requires API key)</a>
+    </div>
+
+    <!-- Tab Cloaker -->
+    <div id="tabcloaker" class="page" style="display:none;">
+      <h1>Tab Cloaker</h1>
+      <p>Your link needs to be unblocked and have embedding allowed.</p>
+      <a class="btn" href="https://tinyurl.com/mpth2br5" target="_blank">Tab Cloaker Download</a>
+    </div>
+
+    <!-- Free Minecraft -->
+    <div id="freeminecraft" class="page" style="display:none;">
+      <h1>Free Minecraft</h1>
+      <p>
+        INSTRUCTIONS: Click on the Eaglercraft file and then click the download button. (Ignore code) 
+        Then store the file somewhere safe and run it. <br><br>
+        ⚠️ WARNING: Loading a new survival world on a Chromebook WILL take at least 2–5 minutes to stop lagging. 
+        This is because Eagler uses your Chromebook as the server and it needs to load chunks. Once it loads all the chunks around you it should stop unless you start moving which will create lag.
+      </p>
+      <a class="btn" href="https://drive.google.com/file/d/18pjUZ_MJHYrUawpUe2DL5mImpKpUOaYn/view?usp=sharing" target="_blank">Download Free Minecraft</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Built by Someone on GitHub Pages</p>
+    </footer>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.style.display = 'none');
+      document.getElementById(pageId).style.display = 'block';
+    }
+  </script>
+</body>
+</html>
