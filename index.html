@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>New Tab Games</title>
   <style>
     body {
@@ -12,6 +12,7 @@
       background-color: #0a0a0a;
       color: #e0ffe0;
     }
+
     .sidebar {
       width: 220px;
       background-color: #111;
@@ -23,11 +24,13 @@
       overflow-y: auto;
       border-right: 2px solid #00ff66;
     }
+
     .sidebar h2 {
       color: #00ff66;
       text-align: center;
       margin-bottom: 30px;
     }
+
     .sidebar a {
       display: block;
       padding: 10px;
@@ -37,20 +40,25 @@
       border: 1px solid #00ff66;
       border-radius: 6px;
       transition: background 0.3s, color 0.3s;
+      text-align: center;
     }
+
     .sidebar a:hover {
       background-color: #00ff66;
       color: #111;
     }
+
     .content {
       margin-left: 240px;
       padding: 40px;
       flex: 1;
       text-align: center;
     }
+
     h1 {
       color: #00ff66;
     }
+
     .btn {
       display: inline-block;
       padding: 10px 20px;
@@ -64,18 +72,63 @@
       font-weight: bold;
       transition: background 0.3s;
     }
+
     .btn:hover {
       background-color: #00cc55;
     }
+
     footer {
       margin-top: 50px;
       font-size: 14px;
       color: #888;
     }
+
     pre {
       text-align: left;
       white-space: pre-wrap;
       word-wrap: break-word;
+    }
+
+    /* ---------- Version badge (top-right) ---------- */
+    .version-badge {
+      position: fixed;
+      top: 14px;
+      right: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 9999;
+      pointer-events: none; /* non-clickable so it doesn't intercept clicks */
+      color: #00ff66;
+      text-shadow: 0 0 8px rgba(0,255,102,0.35);
+      font-weight: 700;
+      /* big version text size so it is visibly larger than the dot */
+      font-size: 26px; 
+    }
+
+    /* small pulsing dot */
+    .version-badge .dot {
+      width: 12px;
+      height: 12px;
+      min-width: 12px;
+      background-color: #00ff66;
+      border-radius: 50%;
+      box-shadow: 0 0 6px rgba(0,255,102,0.45), 0 0 12px rgba(0,255,102,0.25);
+      animation: pulse-dot 1400ms infinite ease-in-out;
+      transform-origin: center;
+      /* ensure the dot size doesn't visually exceed the text by too much */
+    }
+
+    @keyframes pulse-dot {
+      0%   { transform: scale(1);   opacity: 1; }
+      50%  { transform: scale(1.18); opacity: 0.65; }
+      100% { transform: scale(1);   opacity: 1; }
+    }
+
+    /* make sure the version text contrasts well on narrower screens */
+    @media (max-width: 480px) {
+      .version-badge { font-size: 18px; right: 10px; top: 10px; }
+      .version-badge .dot { width: 10px; height: 10px; }
     }
   </style>
 </head>
@@ -89,10 +142,16 @@
     <a href="#" onclick="showPage('freeminecraft')">Free Minecraft</a>
   </div>
 
+  <!-- Floating version badge (top-right) -->
+  <div class="version-badge" aria-hidden="true">
+    <span class="dot"></span>
+    <span class="ver-text">v5.1.0</span>
+  </div>
+
   <div class="content">
     <!-- Home -->
     <div id="home" class="page">
-      <h1>Welcome</h1>
+      <h1>Welcome to New Tab Games</h1>
       <p>
         Collection of Unblocked Games & Links for Websites. If you find anything, please send it in!<br><br>
         Can't block this one : )
@@ -196,6 +255,11 @@ Removed all blocked games.
 9/30/25 - v5.0.0
 Created this website
 - Revamped Everything
+10/1/25 - v5.1.0
++ Added a few little things
+- Removed Cyber City
++ Re-linked Tetris
++ 2 New Sites (Both are the same incase one gets blocked)
       </pre>
     </div>
 
@@ -204,12 +268,11 @@ Created this website
       <h1>Game Websites</h1>
       <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank">Anything Blocked? (Link Removal)</a>
       <a class="btn" href="https://sites.google.com/view/harmony-school-of-innovation/home" target="_blank">Unblocked Games</a>
-      <a class="btn" href="https://sites.google.com/view/cyberlabs/home" target="_blank">Cyber City</a>
       <a class="btn" href="https://nb-ga.github.io/games-site/" target="_blank">Nb-ga Games</a>
       <a class="btn" href="https://arras.netlify.app/#ed2261" target="_blank">Arras.io</a>
       <a class="btn" href="https://getbutterfly.com/fun/google-maps-driving-simulator/" target="_blank">Drive on Google Maps</a>
       <a class="btn" href="https://www.interactive.onlinemathlearning.com/fun_minesweeper.php" target="_blank">Minesweeper</a>
-      <a class="btn" href="https://www.lumpty.com/amusements/games/tetris/tetris.html" target="_blank">Tetris</a>
+      <a class="btn" href="https://tetris-go.netlify.app/" target="_blank">Tetris</a>
       <a class="btn" href="https://www.google.com/logos/fnbx/solitaire/standalone.html" target="_blank">Solitare</a>
       <a class="btn" href="https://www.worldguessr.com/" target="_blank">GeoGuessr</a>
       <a class="btn" href="https://noclip.website/" target="_blank">Noclip.site</a>
@@ -220,6 +283,8 @@ Created this website
       <a class="btn" href="https://littlealchemy.com/" target="_blank">Little Alchemy 1</a>
       <a class="btn" href="https://littlealchemy2.com/" target="_blank">Little Alchemy 2</a>
       <a class="btn" href="https://makereal.tldraw.com/" target="_blank">MakeReal (Requires API key)</a>
+      <a class="btn" href="https://io-games-2025.github.io/" target="_blank">io-games</a>
+      <a class="btn" href="https://quiz-30.github.io/" target="_blank">Quiz30</a>
     </div>
 
     <!-- Tab Cloaker -->
@@ -253,6 +318,8 @@ Created this website
       pages.forEach(page => page.style.display = 'none');
       document.getElementById(pageId).style.display = 'block';
     }
+    // ensure Home visible on load
+    window.onload = () => showPage('home');
   </script>
 </body>
 </html>
