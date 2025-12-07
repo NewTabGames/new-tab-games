@@ -6,166 +6,183 @@
     <title>New Tab Games</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <style>
-        @keyframes pulse-glow {
-            0%, 100% {
-                opacity: 0.8;
-            }
-
-            50% {
-                opacity: 1;
-                text-shadow: 0 0 10px #00ff66;
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .game-card {
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
+        
+        @keyframes pulse-dot {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.18); opacity: 0.65; }
+            100% { transform: scale(1); opacity: 1; }
         }
-
-            .game-card:hover {
-                transform: translateY(-5px) scale(1.02);
-                box-shadow: 0 10px 25px rgba(0, 255, 102, 0.3);
-            }
-
-        .neon-text {
-            text-shadow: 0 0 5px #00ff66, 0 0 10px #00ff66;
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-out;
         }
-
+        
+        .delay-1000 {
+            animation-delay: 1s;
+        }
+        
         .sidebar-link {
             position: relative;
             overflow: hidden;
         }
-
-            .sidebar-link::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background: #00ff66;
-                transition: width 0.3s;
-            }
-
-            .sidebar-link:hover::after {
-                width: 100%;
-            }
-
+        
+        .sidebar-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #a855f7, #f97316);
+            transition: width 0.3s;
+        }
+        
+        .sidebar-link:hover::after {
+            width: 100%;
+        }
+        
         .version-badge .dot {
             animation: pulse-dot 1400ms infinite ease-in-out;
         }
-
-        @keyframes pulse-dot {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.18);
-                opacity: 0.65;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #a855f7, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-border {
+            border-image: linear-gradient(to right, #a855f7, #f97316) 1;
+        }
+        
+        .game-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+        }
+        
+        .neon-glow-purple {
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        }
+        
+        .neon-glow-orange {
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+        }
+        
+        .backdrop-blur {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans">
+<body class="bg-gray-900 text-gray-100 font-sans overflow-x-hidden">
+    <!-- Animated Background -->
+    <div class="fixed inset-0 bg-gradient-to-br from-purple-900/20 via-gray-900 to-orange-900/20 pointer-events-none"></div>
+    <div class="fixed inset-0">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
+
     <!-- Sidebar -->
-    <div class="fixed top-0 left-0 h-screen w-64 bg-gray-800 border-r-2 border-green-500 z-10 overflow-y-auto">
+    <div class="fixed top-0 left-0 h-screen w-64 bg-gray-800/90 backdrop-blur-lg border-r-2 border-purple-500 z-10 overflow-y-auto">
         <div class="p-6">
-            <h2 class="text-2xl font-bold text-green-400 text-center mb-8 neon-text">
-                <i data-feather="gamepad" class="inline mr-2"></i> New Tab Games
+            <h2 class="text-2xl font-bold gradient-text text-center mb-8 animate-pulse">
+                <i data-feather="gamepad-2" class="inline mr-2"></i> New Tab Games
             </h2>
             <nav class="space-y-3">
-                <a href="#" onclick="showPage('home')" class="sidebar-link block py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-300 flex items-center">
+                <button onclick="showPage('home')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
                     <i data-feather="home" class="mr-3"></i> Home
-                </a>
-                <a href="#" onclick="showPage('updates')" class="sidebar-link block py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-300 flex items-center">
+                </button>
+                <button onclick="showPage('updates')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
                     <i data-feather="clock" class="mr-3"></i> Update Log
-                </a>
-                <a href="#" onclick="showPage('websites')" class="sidebar-link block py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-300 flex items-center">
+                </button>
+                <button onclick="showPage('websites')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
                     <i data-feather="globe" class="mr-3"></i> Game Websites
-                </a>
-                <a href="#" onclick="showPage('tabcloaker')" class="sidebar-link block py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-300 flex items-center">
+                </button>
+                <button onclick="showPage('tabcloaker')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
                     <i data-feather="eye-off" class="mr-3"></i> Tab Cloaker
-                </a>
-                <a href="#" onclick="showPage('freeminecraft')" class="sidebar-link block py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-300 flex items-center">
+                </button>
+                <button onclick="showPage('freeminecraft')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
                     <i data-feather="box" class="mr-3"></i> Free Minecraft
-                </a>
-                <a href="#" onclick="showPage('htmlgames')" class="sidebar-link block py-3 px-4 rounded-lg hover:bg-gray-700 transition-colors duration-300 flex items-center">
+                </button>
+                <button onclick="showPage('htmlgames')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
                     <i data-feather="code" class="mr-3"></i> HTML Games (Unblockable)
-                </a>
+                </button>
             </nav>
         </div>
     </div>
 
     <!-- Floating version badge -->
-    <div class="version-badge fixed top-4 right-6 flex items-center gap-2 z-50 text-green-400 text-xl font-bold">
-        <span class="dot w-3 h-3 bg-green-400 rounded-full"></span>
-        <span class="ver-text">v6.7.0</span>
+    <div class="version-badge fixed top-4 right-6 flex items-center gap-2 z-50 text-xl font-bold">
+        <span class="dot w-3 h-3 bg-gradient-to-r from-purple-400 to-orange-400 rounded-full"></span>
+        <span class="gradient-text ver-text">v6.7.0</span>
     </div>
 
     <!-- Main Content -->
-    <div class="ml-64 p-8 min-h-screen">
+    <div class="ml-64 p-8 min-h-screen relative z-0">
         <!-- Home -->
-        <div id="home" class="page">
+        <div id="home" class="page animate-fadeIn">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl font-bold text-green-400 mb-6 neon-text animate-pulse-glow">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-6 animate-pulse">
                     Welcome to New Tab Games
                 </h1>
                 <p class="text-lg mb-8 text-gray-300">
-                    Your ultimate collection of unblocked games & links. Can't block this one! <span class="text-green-400">:)</span>
+                    Your ultimate collection of unblocked games & links. Can't block this one! <span class="gradient-text">:)</span>
                 </p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                    <div class="game-card bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <div class="game-card bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30 hover:border-purple-400/50">
                         <div class="flex items-center mb-4">
-                            <i data-feather="plus-circle" class="text-green-400 mr-3"></i>
+                            <i data-feather="plus-circle" class="text-purple-400 mr-3"></i>
                             <h3 class="text-xl font-semibold">Request New Games</h3>
                         </div>
                         <p class="text-gray-400 mb-4">Found an awesome game? Let us know!</p>
-                        <a href="https://forms.gle/spFAscDro1LyfyF68" target="_blank" class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-gray-900 font-medium rounded-lg transition-colors">
+                        <a href="https://forms.gle/spFAscDro1LyfyF68" target="_blank" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30">
                             <i data-feather="send" class="mr-2"></i> Submit Request
                         </a>
                     </div>
 
-                    <div class="game-card bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <div class="game-card bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-orange-500/30 hover:border-orange-400/50">
                         <div class="flex items-center mb-4">
-                            <i data-feather="alert-triangle" class="text-yellow-400 mr-3"></i>
+                            <i data-feather="alert-triangle" class="text-orange-400 mr-3"></i>
                             <h3 class="text-xl font-semibold">Report Issues</h3>
                         </div>
                         <p class="text-gray-400 mb-4">Found a broken link? Help us fix it!</p>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-medium rounded-lg transition-colors">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30">
                             <i data-feather="alert-octagon" class="mr-2"></i> Report Now
                         </a>
                     </div>
                 </div>
 
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
-                        <i data-feather="zap" class="text-green-400 mr-3"></i> Quick Stats
+                        <i data-feather="zap" class="text-purple-400 mr-3"></i> Quick Stats
                     </h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="text-center p-3 bg-gray-700 rounded-lg">
-                            <div class="text-green-400 text-2xl font-bold">25+</div>
+                        <div class="text-center p-3 bg-gray-700/50 rounded-lg border border-purple-500/20">
+                            <div class="gradient-text text-2xl font-bold">25+</div>
                             <div class="text-gray-400 text-sm">Games Available</div>
                         </div>
-                        <div class="text-center p-3 bg-gray-700 rounded-lg">
-                            <div class="text-green-400 text-2xl font-bold">Multiple</div>
+                        <div class="text-center p-3 bg-gray-700/50 rounded-lg border border-purple-500/20">
+                            <div class="gradient-text text-2xl font-bold">Multiple</div>
                             <div class="text-gray-400 text-sm">Game Categories</div>
                         </div>
-                        <div class="text-center p-3 bg-gray-700 rounded-lg">
-                            <div class="text-green-400 text-2xl font-bold">3</div>
+                        <div class="text-center p-3 bg-gray-700/50 rounded-lg border border-purple-500/20">
+                            <div class="gradient-text text-2xl font-bold">3</div>
                             <div class="text-gray-400 text-sm">Special Features</div>
                         </div>
-                        <div class="text-center p-3 bg-gray-700 rounded-lg">
-                            <div class="text-green-400 text-2xl font-bold">∞</div>
+                        <div class="text-center p-3 bg-gray-700/50 rounded-lg border border-purple-500/20">
+                            <div class="gradient-text text-2xl font-bold">∞</div>
                             <div class="text-gray-400 text-sm">Hours of Fun</div>
                         </div>
                     </div>
@@ -174,10 +191,9 @@
                     <div class="mt-6 flex justify-center">
                         <a href="https://www.hitwebcounter.com/" target="_blank">
                             <img src="https://hitwebcounter.com/counter/counter.php?page=21442984&style=0006&nbdigits=5&type=page&initCount=0"
-                                 title="Counters" alt="Counters" border="0" />
+                                 title="Counters" alt="Counters" border="0" class="rounded-lg" />
                         </a>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -185,17 +201,17 @@
         <!-- Updates -->
         <div id="updates" class="page hidden">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl font-bold text-green-400 mb-8 neon-text">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
                     <i data-feather="clock" class="inline mr-3"></i> Update Log
                 </h1>
 
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 overflow-x-auto">
+                <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30 overflow-x-auto">
                     <div class="prose prose-invert max-w-none">
-                        <h3 class="text-green-400">Recent Updates</h3>
+                        <h3 class="gradient-text">Recent Updates</h3>
                         <ul class="space-y-4">
                             <li>
-                                <span class="font-bold text-green-400">10/29/25 - v6.7.0 (Biggest Update OF ALL TIME CONTENTWISE)</span>
-                                <ul class="ml-6 list-disc">
+                                <span class="font-bold gradient-text">10/29/25 - v6.7.0 (Biggest Update OF ALL TIME CONTENTWISE)</span>
+                                <ul class="ml-6 list-disc text-gray-300">
                                     <li>Added Elite Gamez</li>
                                     <li>Added ZenithHub</li>
                                     <li>Added MathFilm</li>
@@ -207,10 +223,11 @@
                                     <li>Added LoungeF2X</li>
                                     <li>Added HTML Games Bar (Completely Unblockable btw)</li>
                                 </ul>
+                            </li>
                         </ul>
 
-                        <h3 class="text-green-400 mt-8">Full History</h3>
-                        <pre class="bg-gray-900 p-4 rounded-lg text-sm overflow-x-auto">
+                        <h3 class="gradient-text mt-8">Full History</h3>
+                        <pre class="bg-gray-900/50 p-4 rounded-lg text-sm overflow-x-auto text-gray-300 border border-purple-500/20">
 Legacy Update 9/15/22 First Ever v1
 This was the creation date of the first website I have ever made. Rest in peace, "TI-84 Plus CE Calculator"
 (Mind you this is NOT the same website. This current website is 3rd in the series I have made. The 2nd series was, "English Project" which later died to the takedown of JavaScript. This included Embedding and Bookmarks.)
@@ -323,7 +340,7 @@ Created this website
 - Added DNV2
 - Added LoungeF2X
 - Added HTML Games Bar
-            </pre>
+                        </pre>
                     </div>
                 </div>
             </div>
@@ -331,121 +348,121 @@ Created this website
 
         <!-- Websites -->
         <div id="websites" class="page hidden">
-            <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl font-bold text-green-400 mb-8 neon-text">
+            <div class="max-w-6xl mx-auto">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
                     <i data-feather="globe" class="inline mr-3"></i> Game Websites
                 </h1>
 
                 <div class="mb-8 flex flex-wrap gap-4">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-red-500/30">
                         <i data-feather="alert-triangle" class="mr-2"></i> Report Blocked Link
                     </a>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <a href="https://nb-ga.github.io/games-site/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Nb-ga Games</span>
+                    <a href="https://nb-ga.github.io/games-site/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Nb-ga Games</span>
                     </a>
-                    <a href="https://arras.netlify.app/#ed2261" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Arras.io</span>
+                    <a href="https://arras.netlify.app/#ed2261" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Arras.io</span>
                     </a>
-                    <a href="https://getbutterfly.com/fun/google-maps-driving-simulator/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Drive on Google Maps</span>
+                    <a href="https://getbutterfly.com/fun/google-maps-driving-simulator/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Drive on Google Maps</span>
                     </a>
-                    <a href="https://www.interactive.onlinemathlearning.com/fun_minesweeper.php" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Minesweeper</span>
+                    <a href="https://www.interactive.onlinemathlearning.com/fun_minesweeper.php" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Minesweeper</span>
                     </a>
-                    <a href="https://tetris-go.netlify.app/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Tetris</span>
+                    <a href="https://tetris-go.netlify.app/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Tetris</span>
                     </a>
-                    <a href="https://www.google.com/logos/fnbx/solitaire/standalone.html" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Solitaire</span>
+                    <a href="https://www.google.com/logos/fnbx/solitaire/standalone.html" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Solitaire</span>
                     </a>
-                    <a href="https://www.worldguessr.com/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>GeoGuessr</span>
+                    <a href="https://www.worldguessr.com/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">GeoGuessr</span>
                     </a>
-                    <a href="https://noclip.website/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Noclip.site</span>
+                    <a href="https://noclip.website/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Noclip.site</span>
                     </a>
-                    <a href="https://www.google.com/logos/2019/july4th19/r6/july4th19.html" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Google Baseball</span>
+                    <a href="https://www.google.com/logos/2019/july4th19/r6/july4th19.html" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Google Baseball</span>
                     </a>
-                    <a href="https://quickdraw.withgoogle.com/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Quick Draw</span>
+                    <a href="https://quickdraw.withgoogle.com/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Quick Draw</span>
                     </a>
-                    <a href="https://neal-fun.firebaseapp.com/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Ripoff Neal.fun</span>
+                    <a href="https://neal-fun.firebaseapp.com/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Ripoff Neal.fun</span>
                     </a>
-                    <a href="https://www.fusiondex.org/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>FusionDex</span>
+                    <a href="https://www.fusiondex.org/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">FusionDex</span>
                     </a>
-                    <a href="https://littlealchemy.com/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Little Alchemy 1</span>
+                    <a href="https://littlealchemy.com/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Little Alchemy 1</span>
                     </a>
-                    <a href="https://littlealchemy2.com/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Little Alchemy 2</span>
+                    <a href="https://littlealchemy2.com/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Little Alchemy 2</span>
                     </a>
-                    <a href="https://makereal.tldraw.com/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>MakeReal (Requires API key)</span>
+                    <a href="https://makereal.tldraw.com/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">MakeReal (Requires API key)</span>
                     </a>
-                    <a href="https://plirof.github.io/shootr/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Shootr</span>
+                    <a href="https://plirof.github.io/shootr/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Shootr</span>
                     </a>
-                    <a href="https://sites.google.com/view/jnrvc-tgrfde-erty-btvrd4et-yuy/home?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Elite Gamez</span>
+                    <a href="https://sites.google.com/view/jnrvc-tgrfde-erty-btvrd4et-yuy/home?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Elite Gamez</span>
                     </a>
-                    <a href="https://zenithub.pages.dev/start" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>ZenithHub (Has proxy, untested)</span>
+                    <a href="https://zenithub.pages.dev/start" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">ZenithHub (Has proxy, untested)</span>
                     </a>
-                    <a href="https://vm.mathfilm.dk/?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>MathFilm (Working Proxy!!!)</span>
+                    <a href="https://vm.mathfilm.dk/?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">MathFilm (Working Proxy!!!)</span>
                     </a>
-                    <a href="https://sites.google.com/view/equations-guide/home?authuser=0" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>ΩMEGA (Emulator + Flash Games)</span>
+                    <a href="https://sites.google.com/view/equations-guide/home?authuser=0" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">ΩMEGA (Emulator + Flash Games)</span>
                     </a>
-                    <a href="https://arcadehubgaming.github.io/v4/" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Arcade Hub (Has like 20 proxies, untested)</span>
+                    <a href="https://arcadehubgaming.github.io/v4/" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Arcade Hub (Has like 20 proxies, untested)</span>
                     </a>
-                    <a href="https://unblockzone.vercel.app/p.html" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>unblockzone v5 (Has proxy, untested)</span>
+                    <a href="https://unblockzone.vercel.app/p.html" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">unblockzone v5 (Has proxy, untested)</span>
                     </a>
-                    <a href="https://raw.githack.com/AlexDuyNguyen/gamesiteallprojects/main/index.html?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Duck With Goose Skin</span>
+                    <a href="https://raw.githack.com/AlexDuyNguyen/gamesiteallprojects/main/index.html?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Duck With Goose Skin</span>
                     </a>
-                    <a href="https://sites.google.com/view/dominumnetworkv2/dnv2?authuser=0" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>DNV2 (Has proxies, untested)</span>
+                    <a href="https://sites.google.com/view/dominumnetworkv2/dnv2?authuser=0" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">DNV2 (Has proxies, untested)</span>
                     </a>
-                    <a href="https://l2x.purpleutilities.xyz/?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>LoungeF2X (Untested proxies, AI does not work)</span>
+                    <a href="https://l2x.purpleutilities.xyz/?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">LoungeF2X (Untested proxies, AI does not work)</span>
                     </a>
-                    <a href="https://nintendoboi222.github.io/#google_vignette" target="_blank" class="game-card bg-gray-800 p-4 rounded-lg border border-gray-700 hover:border-green-400 flex items-center">
-                        <i data-feather="play" class="text-green-400 mr-3"></i>
-                        <span>Nintendoboi22222222</span>
+                    <a href="https://nintendoboi222.github.io/#google_vignette" target="_blank" class="game-card bg-gray-800/50 backdrop-blur-sm p-4 rounded-lg border border-purple-500/30 hover:border-purple-400/50 flex items-center group">
+                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                        <span class="text-gray-300 group-hover:text-white transition-colors">Nintendoboi22222222</span>
                     </a>
                 </div>
             </div>
@@ -454,13 +471,13 @@ Created this website
         <!-- Tab Cloaker -->
         <div id="tabcloaker" class="page hidden">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl font-bold text-green-400 mb-8 neon-text">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
                     <i data-feather="eye-off" class="inline mr-3"></i> Tab Cloaker
                 </h1>
 
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 mb-8">
+                <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30 mb-8">
                     <div class="flex items-start mb-6">
-                        <i data-feather="info" class="text-yellow-400 mr-3 mt-1"></i>
+                        <i data-feather="info" class="text-orange-400 mr-3 mt-1"></i>
                         <div>
                             <h3 class="text-xl font-semibold mb-2">Important Note</h3>
                             <p class="text-gray-300">
@@ -470,29 +487,29 @@ Created this website
                     </div>
 
                     <div class="flex flex-wrap gap-4">
-                        <a href="https://drive.google.com/file/d/1dUOj8oWvXmX4axRTMzCPgjjJ320-U426/view?usp=sharing" target="_blank" class="inline-flex items-center px-4 py-3 bg-green-500 hover:bg-green-600 text-gray-900 font-bold rounded-lg transition-colors">
+                        <a href="https://drive.google.com/file/d/1dUOj8oWvXmX4axRTMzCPgjjJ320-U426/view?usp=sharing" target="_blank" class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-purple-500 to-orange-500 hover:from-purple-600 hover:to-orange-600 text-white font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30">
                             <i data-feather="download" class="mr-2"></i> Download Tab Cloaker
                         </a>
                     </div>
                 </div>
 
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
-                        <i data-feather="shield" class="text-green-400 mr-3"></i> How It Works
+                        <i data-feather="shield" class="text-purple-400 mr-3"></i> How It Works
                     </h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="text-green-400 text-2xl mb-2">1</div>
+                        <div class="bg-gray-700/50 p-4 rounded-lg border border-purple-500/20">
+                            <div class="gradient-text text-2xl mb-2">1</div>
                             <h4 class="font-semibold mb-2">Download</h4>
                             <p class="text-gray-400 text-sm">Get the cloaker tool from the link above</p>
                         </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="text-green-400 text-2xl mb-2">2</div>
+                        <div class="bg-gray-700/50 p-4 rounded-lg border border-purple-500/20">
+                            <div class="gradient-text text-2xl mb-2">2</div>
                             <h4 class="font-semibold mb-2">Configure</h4>
                             <p class="text-gray-400 text-sm">Set up your desired cloaking settings</p>
                         </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <div class="text-green-400 text-2xl mb-2">3</div>
+                        <div class="bg-gray-700/50 p-4 rounded-lg border border-purple-500/20">
+                            <div class="gradient-text text-2xl mb-2">3</div>
                             <h4 class="font-semibold mb-2">Enjoy</h4>
                             <p class="text-gray-400 text-sm">Browse safely with your cloaked tabs</p>
                         </div>
@@ -504,21 +521,21 @@ Created this website
         <!-- Free Minecraft -->
         <div id="freeminecraft" class="page hidden">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl font-bold text-green-400 mb-8 neon-text">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
                     <i data-feather="box" class="inline mr-3"></i> Free Minecraft
                 </h1>
 
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 mb-8">
+                <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30 mb-8">
                     <div class="flex items-start mb-6">
-                        <i data-feather="alert-triangle" class="text-yellow-400 mr-3 mt-1"></i>
+                        <i data-feather="alert-triangle" class="text-orange-400 mr-3 mt-1"></i>
                         <div>
                             <h3 class="text-xl font-semibold mb-2">Instructions</h3>
                             <p class="text-gray-300 mb-4">
                                 Click on the Eaglercraft file and then click the download button. (Ignore code)
                                 Then store the file somewhere safe and run it.
                             </p>
-                            <div class="bg-gray-700 p-4 rounded-lg">
-                                <h4 class="font-semibold text-yellow-400 mb-2">⚠️ WARNING:</h4>
+                            <div class="bg-gray-700/50 p-4 rounded-lg border border-orange-500/20">
+                                <h4 class="font-semibold text-orange-400 mb-2">⚠️ WARNING:</h4>
                                 <p class="text-gray-300">
                                     Loading a new survival world on a Chromebook WILL take at least 2–5 minutes to stop lagging.
                                     This is because Eagler uses your Chromebook as the server and it needs to load chunks. Once it loads all the chunks around you it should stop unless you start moving which will create lag.
@@ -528,30 +545,30 @@ Created this website
                     </div>
 
                     <div class="flex flex-wrap gap-4">
-                        <a href="https://drive.google.com/file/d/18pjUZ_MJHYrUawpUe2DL5mImpKpUOaYn/view?usp=sharing" target="_blank" class="inline-flex items-center px-4 py-3 bg-green-500 hover:bg-green-600 text-gray-900 font-bold rounded-lg transition-colors">
+                        <a href="https://drive.google.com/file/d/18pjUZ_MJHYrUawpUe2DL5mImpKpUOaYn/view?usp=sharing" target="_blank" class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30">
                             <i data-feather="download" class="mr-2"></i> Download Minecraft 1.8.8
                         </a>
-                        <a href="https://drive.google.com/file/d/1lQnwB_6FZ-wPXQPg3NxcBTEVJRFxY00u/view" target="_blank" class="inline-flex items-center px-4 py-3 bg-green-500 hover:bg-green-600 text-gray-900 font-bold rounded-lg transition-colors">
+                        <a href="https://drive.google.com/file/d/1lQnwB_6FZ-wPXQPg3NxcBTEVJRFxY00u/view" target="_blank" class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/30">
                             <i data-feather="download" class="mr-2"></i> Download Minecraft 1.9.4 (Recommended)
                         </a>
                     </div>
                 </div>
 
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30">
                     <h3 class="text-xl font-semibold mb-4 flex items-center">
-                        <i data-feather="help-circle" class="text-green-400 mr-3"></i> Frequently Asked Questions
+                        <i data-feather="help-circle" class="text-purple-400 mr-3"></i> Frequently Asked Questions
                     </h3>
                     <div class="space-y-4">
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <h4 class="font-semibold text-green-400">Is this really free?</h4>
+                        <div class="bg-gray-700/50 p-4 rounded-lg border border-purple-500/20">
+                            <h4 class="font-semibold gradient-text">Is this really free?</h4>
                             <p class="text-gray-300 mt-1">Yes! This is a free version of Minecraft that runs in your browser.</p>
                         </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <h4 class="font-semibold text-green-400">Does it work on Chromebooks?</h4>
+                        <div class="bg-gray-700/50 p-4 rounded-lg border border-purple-500/20">
+                            <h4 class="font-semibold gradient-text">Does it work on Chromebooks?</h4>
                             <p class="text-gray-300 mt-1">Yes, but as noted above, there may be some initial lag when loading new worlds.</p>
                         </div>
-                        <div class="bg-gray-700 p-4 rounded-lg">
-                            <h4 class="font-semibold text-green-400">Is this safe to download?</h4>
+                        <div class="bg-gray-700/50 p-4 rounded-lg border border-purple-500/20">
+                            <h4 class="font-semibold gradient-text">Is this safe to download?</h4>
                             <p class="text-gray-300 mt-1">Of course it is you silly goose.</p>
                         </div>
                     </div>
@@ -562,14 +579,14 @@ Created this website
         <!-- HTML Games Page -->
         <div id="htmlgames" class="page hidden">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl font-bold text-green-400 mb-8 neon-text">
+                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
                     <i data-feather="code" class="inline mr-3"></i> HTML Games
                 </h1>
 
                 <!-- Instructions Panel -->
-                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 mb-8">
+                <div class="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/30 mb-8">
                     <div class="flex items-start mb-6">
-                        <i data-feather="alert-triangle" class="text-yellow-400 mr-3 mt-1"></i>
+                        <i data-feather="alert-triangle" class="text-orange-400 mr-3 mt-1"></i>
                         <div>
                             <h3 class="text-xl font-semibold mb-2">Instructions</h3>
                             <p class="text-gray-300 mb-4">
@@ -582,26 +599,40 @@ Created this website
                     </div>
 
                     <div class="flex flex-wrap gap-4">
-                        <a href="https://github.com/NewTabGames/new-tab-games/releases/download/PDF/Ultimate.Game.Stash.pdf" target="_blank" class="inline-flex items-center px-4 py-3 bg-green-500 hover:bg-green-600 text-gray-900 font-bold rounded-lg transition-colors">
+                        <a href="https://github.com/NewTabGames/new-tab-games/releases/download/PDF/Ultimate.Game.Stash.pdf" target="_blank" class="inline-flex items-center px-4 py-3 bg-gradient-to-r from-purple-500 to-orange-500 hover:from-purple-600 hover:to-orange-600 text-white font-bold rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/30">
                             <i data-feather="download" class="mr-2"></i> Download Ultimate Game Stash PDF
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <script>
-            feather.replace();
+    <script>
+        feather.replace();
 
-            function showPage(pageId) {
-                document.querySelectorAll('.page').forEach(page => {
-                    page.classList.add('hidden');
-                });
-                document.getElementById(pageId).classList.remove('hidden');
-            }
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
+                link.classList.add('hover:bg-gray-700/50');
+            });
+            
+            event.target.classList.remove('hover:bg-gray-700/50');
+            event.target.classList.add('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
+        }
 
-            // ensure Home visible on load
-            window.onload = () => showPage('home');
-        </script>
+        // ensure Home visible on load
+        window.onload = () => {
+            showPage('home');
+            document.querySelector('.sidebar-link').classList.add('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
+            document.querySelector('.sidebar-link').classList.remove('hover:bg-gray-700/50');
+        };
+    </script>
 </body>
 </html>
