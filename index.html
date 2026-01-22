@@ -1,452 +1,389 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New Tab Games</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse-dot {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            50% {
-                transform: scale(1.18);
-                opacity: 0.65;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-
-        .animate-fadeIn {
-            animation: fadeIn 0.5s ease-out;
-        }
-
-        .delay-1000 {
-            animation-delay: 1s;
-        }
-
-        .sidebar-link {
-            position: relative;
-            overflow: hidden;
-        }
-
-            .sidebar-link::after {
-                content: '';
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316));
-                transition: width 0.3s;
-            }
-
-            .sidebar-link:hover::after {
-                width: 100%;
-            }
-
-        .version-badge .dot {
-            animation: pulse-dot 1400ms infinite ease-in-out;
-        }
-
-        .gradient-text {
-            background: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .gradient-border {
-            border-image: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316)) 1;
-        }
-
-        .game-card {
-            transition: all 0.3s ease;
-            transform-style: preserve-3d;
-        }
-
-            .game-card:hover {
-                transform: translateY(-5px) scale(1.02);
-                box-shadow: 0 10px 25px rgba(var(--primary-rgb, 168, 85, 247), 0.3);
-            }
-
-        .neon-glow-primary {
-            box-shadow: 0 0 20px rgba(var(--primary-rgb, 168, 85, 247), 0.5);
-        }
-
-        .neon-glow-secondary {
-            box-shadow: 0 0 20px rgba(var(--secondary-rgb, 249, 115, 22), 0.5);
-        }
-
-        .backdrop-blur {
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .color-input-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
-        .color-input {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            border: 2px solid #333;
-            cursor: pointer;
-        }
-
-        .theme-preview {
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary-color, #a855f7);
-            border-radius: 4px;
-        }
-
-        /* Theme Variables - These will be updated by JavaScript */
-        :root {
-            --primary-color: #a855f7;
-            --secondary-color: #f97316;
-            --primary-rgb: 168, 85, 247;
-            --secondary-rgb: 249, 115, 22;
-            --background-color: #111827;
-            --card-color: #1f2937;
-            --text-color: #f3f4f6;
-            --text-secondary-color: #d1d5db;
-        }
-
-        /* Apply theme variables to the main elements */
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
-
-        .main-bg {
-            background-color: var(--background-color);
-        }
-
-        .card-bg {
-            background-color: var(--card-color);
-        }
-
-        .card-bg-translucent {
-            background-color: rgba(var(--card-rgb, 31, 41, 55), 0.5);
-        }
-
-        .text-primary {
-            color: var(--text-color);
-        }
-
-        .text-secondary {
-            color: var(--text-secondary-color);
-        }
-
-        .border-primary {
-            border-color: var(--primary-color);
-        }
-
-        .border-secondary {
-            border-color: var(--secondary-color);
-        }
-
-        .animated-bg {
-            background: linear-gradient(to bottom right, rgba(var(--primary-rgb, 168, 85, 247), 0.2), var(--background-color), rgba(var(--secondary-rgb, 249, 115, 22), 0.2));
-        }
-
-        /* Dynamic button styles using CSS variables */
-        .btn-primary {
-            background: linear-gradient(to right, var(--primary-color, #a855f7), var(--primary-hover-color, #9333ea));
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .btn-primary:hover {
-                background: linear-gradient(to right, var(--primary-hover-color, #9333ea), var(--primary-active-color, #7e22ce));
-                box-shadow: 0 10px 15px -3px rgba(var(--primary-rgb, 168, 85, 247), 0.3);
-            }
-
-        .btn-secondary {
-            background: linear-gradient(to right, var(--secondary-color, #f97316), var(--secondary-hover-color, #ea580c));
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .btn-secondary:hover {
-                background: linear-gradient(to right, var(--secondary-hover-color, #ea580c), var(--secondary-active-color, #c2410c));
-                box-shadow: 0 10px 15px -3px rgba(var(--secondary-rgb, 249, 115, 22), 0.3);
-            }
-
-        .btn-gradient {
-            background: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316));
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .btn-gradient:hover {
-                background: linear-gradient(to right, var(--primary-hover-color, #9333ea), var(--secondary-hover-color, #ea580c));
-                box-shadow: 0 10px 15px -3px rgba(var(--primary-rgb, 168, 85, 247), 0.3);
-            }
-
-        .btn-success {
-            background: linear-gradient(to right, #10b981, #059669);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .btn-success:hover {
-                background: linear-gradient(to right, #059669, #047857);
-                box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
-            }
-
-        .btn-danger {
-            background: linear-gradient(to right, #ef4444, #dc2626);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .btn-danger:hover {
-                background: linear-gradient(to right, #dc2626, #b91c1c);
-                box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
-            }
-
-        /* Preset theme buttons with hardcoded colors */
-        .preset-default {
-            background: linear-gradient(to right, #a855f7, #f97316);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .preset-default:hover {
-                background: linear-gradient(to right, #9333ea, #ea580c);
-                opacity: 0.9;
-            }
-
-        .preset-ocean {
-            background: linear-gradient(to right, #3b82f6, #14b8a6);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .preset-ocean:hover {
-                background: linear-gradient(to right, #2563eb, #0d9488);
-                opacity: 0.9;
-            }
-
-        .preset-sunset {
-            background: linear-gradient(to right, #ec4899, #f59e0b);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .preset-sunset:hover {
-                background: linear-gradient(to right, #db2777, #d97706);
-                opacity: 0.9;
-            }
-
-        .preset-forest {
-            background: linear-gradient(to right, #10b981, #84cc16);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .preset-forest:hover {
-                background: linear-gradient(to right, #059669, #65a30d);
-                opacity: 0.9;
-            }
-
-        .preset-midnight {
-            background: linear-gradient(to right, #6366f1, #a855f7);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .preset-midnight:hover {
-                background: linear-gradient(to right, #4f46e5, #9333ea);
-                opacity: 0.9;
-            }
-
-        .preset-candy {
-            background: linear-gradient(to right, #ec4899, #a855f7);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-            .preset-candy:hover {
-                background: linear-gradient(to right, #db2777, #9333ea);
-                opacity: 0.9;
-            }
-    </style>
-</head>
-<body class="main-bg text-primary font-sans overflow-x-hidden">
-    <!-- Animated Background -->
-    <div class="fixed inset-0 animated-bg pointer-events-none"></div>
-    <div class="fixed inset-0">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-    </div>
-
-    <!-- Sidebar -->
-    <div class="fixed top-0 left-0 h-screen w-64 card-bg-translucent backdrop-blur-lg border-r-2 border-primary z-10 overflow-y-auto">
-        <div class="p-6">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>New Tab Games</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script src="https://unpkg.com/feather-icons"></script>
+      <style>
+         @keyframes fadeIn {
+         from {
+         opacity: 0;
+         transform: translateY(20px);
+         }
+         to {
+         opacity: 1;
+         transform: translateY(0);
+         }
+         }
+         @keyframes pulse-dot {
+         0% {
+         transform: scale(1);
+         opacity: 1;
+         }
+         50% {
+         transform: scale(1.18);
+         opacity: 0.65;
+         }
+         100% {
+         transform: scale(1);
+         opacity: 1;
+         }
+         }
+         .animate-fadeIn {
+         animation: fadeIn 0.5s ease-out;
+         }
+         .delay-1000 {
+         animation-delay: 1s;
+         }
+         .sidebar-link {
+         position: relative;
+         overflow: hidden;
+         }
+         .sidebar-link::after {
+         content: '';
+         position: absolute;
+         bottom: 0;
+         left: 0;
+         width: 0;
+         height: 2px;
+         background: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316));
+         transition: width 0.3s;
+         }
+         .sidebar-link:hover::after {
+         width: 100%;
+         }
+         .version-badge .dot {
+         animation: pulse-dot 1400ms infinite ease-in-out;
+         }
+         .gradient-text {
+         background: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316));
+         -webkit-background-clip: text;
+         -webkit-text-fill-color: transparent;
+         background-clip: text;
+         }
+         .gradient-border {
+         border-image: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316)) 1;
+         }
+         .game-card {
+         transition: all 0.3s ease;
+         transform-style: preserve-3d;
+         }
+         .game-card:hover {
+         transform: translateY(-5px) scale(1.02);
+         box-shadow: 0 10px 25px rgba(var(--primary-rgb, 168, 85, 247), 0.3);
+         }
+         .neon-glow-primary {
+         box-shadow: 0 0 20px rgba(var(--primary-rgb, 168, 85, 247), 0.5);
+         }
+         .neon-glow-secondary {
+         box-shadow: 0 0 20px rgba(var(--secondary-rgb, 249, 115, 22), 0.5);
+         }
+         .backdrop-blur {
+         backdrop-filter: blur(10px);
+         -webkit-backdrop-filter: blur(10px);
+         }
+         .color-input-wrapper {
+         position: relative;
+         display: inline-block;
+         }
+         .color-input {
+         width: 50px;
+         height: 50px;
+         border-radius: 8px;
+         border: 2px solid #333;
+         cursor: pointer;
+         }
+         .theme-preview {
+         border-radius: 8px;
+         overflow: hidden;
+         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+         }
+         /* Custom scrollbar */
+         ::-webkit-scrollbar {
+         width: 8px;
+         }
+         ::-webkit-scrollbar-track {
+         background: rgba(0, 0, 0, 0.1);
+         }
+         ::-webkit-scrollbar-thumb {
+         background: var(--primary-color, #a855f7);
+         border-radius: 4px;
+         }
+         /* Theme Variables - These will be updated by JavaScript */
+         :root {
+         --primary-color: #a855f7;
+         --secondary-color: #f97316;
+         --primary-rgb: 168, 85, 247;
+         --secondary-rgb: 249, 115, 22;
+         --background-color: #111827;
+         --card-color: #1f2937;
+         --text-color: #f3f4f6;
+         --text-secondary-color: #d1d5db;
+         }
+         /* Apply theme variables to the main elements */
+         body {
+         background-color: var(--background-color);
+         color: var(--text-color);
+         }
+         .main-bg {
+         background-color: var(--background-color);
+         }
+         .card-bg {
+         background-color: var(--card-color);
+         }
+         .card-bg-translucent {
+         background-color: rgba(var(--card-rgb, 31, 41, 55), 0.5);
+         }
+         .text-primary {
+         color: var(--text-color);
+         }
+         .text-secondary {
+         color: var(--text-secondary-color);
+         }
+         .border-primary {
+         border-color: var(--primary-color);
+         }
+         .border-secondary {
+         border-color: var(--secondary-color);
+         }
+         .animated-bg {
+         background: linear-gradient(to bottom right, rgba(var(--primary-rgb, 168, 85, 247), 0.2), var(--background-color), rgba(var(--secondary-rgb, 249, 115, 22), 0.2));
+         }
+         /* Dynamic button styles using CSS variables */
+         .btn-primary {
+         background: linear-gradient(to right, var(--primary-color, #a855f7), var(--primary-hover-color, #9333ea));
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .btn-primary:hover {
+         background: linear-gradient(to right, var(--primary-hover-color, #9333ea), var(--primary-active-color, #7e22ce));
+         box-shadow: 0 10px 15px -3px rgba(var(--primary-rgb, 168, 85, 247), 0.3);
+         }
+         .btn-secondary {
+         background: linear-gradient(to right, var(--secondary-color, #f97316), var(--secondary-hover-color, #ea580c));
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .btn-secondary:hover {
+         background: linear-gradient(to right, var(--secondary-hover-color, #ea580c), var(--secondary-active-color, #c2410c));
+         box-shadow: 0 10px 15px -3px rgba(var(--secondary-rgb, 249, 115, 22), 0.3);
+         }
+         .btn-gradient {
+         background: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316));
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .btn-gradient:hover {
+         background: linear-gradient(to right, var(--primary-hover-color, #9333ea), var(--secondary-hover-color, #ea580c));
+         box-shadow: 0 10px 15px -3px rgba(var(--primary-rgb, 168, 85, 247), 0.3);
+         }
+         .btn-success {
+         background: linear-gradient(to right, #10b981, #059669);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .btn-success:hover {
+         background: linear-gradient(to right, #059669, #047857);
+         box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+         }
+         .btn-danger {
+         background: linear-gradient(to right, #ef4444, #dc2626);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .btn-danger:hover {
+         background: linear-gradient(to right, #dc2626, #b91c1c);
+         box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.3);
+         }
+         /* Preset theme buttons with hardcoded colors */
+         .preset-default {
+         background: linear-gradient(to right, #a855f7, #f97316);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-default:hover {
+         background: linear-gradient(to right, #9333ea, #ea580c);
+         opacity: 0.9;
+         }
+         .preset-ocean {
+         background: linear-gradient(to right, #3b82f6, #14b8a6);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-ocean:hover {
+         background: linear-gradient(to right, #2563eb, #0d9488);
+         opacity: 0.9;
+         }
+         .preset-sunset {
+         background: linear-gradient(to right, #ec4899, #f59e0b);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-sunset:hover {
+         background: linear-gradient(to right, #db2777, #d97706);
+         opacity: 0.9;
+         }
+         .preset-forest {
+         background: linear-gradient(to right, #10b981, #84cc16);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-forest:hover {
+         background: linear-gradient(to right, #059669, #65a30d);
+         opacity: 0.9;
+         }
+         .preset-midnight {
+         background: linear-gradient(to right, #6366f1, #a855f7);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-midnight:hover {
+         background: linear-gradient(to right, #4f46e5, #9333ea);
+         opacity: 0.9;
+         }
+         .preset-candy {
+         background: linear-gradient(to right, #ec4899, #a855f7);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-candy:hover {
+         background: linear-gradient(to right, #db2777, #9333ea);
+         opacity: 0.9;
+         }
+      </style>
+   </head>
+   <body class="main-bg text-primary font-sans overflow-x-hidden">
+      <!-- Animated Background -->
+      <div class="fixed inset-0 animated-bg pointer-events-none"></div>
+      <div class="fixed inset-0">
+         <div class="absolute top-0 left-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
+         <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+      <!-- Sidebar -->
+      <div class="fixed top-0 left-0 h-screen w-64 card-bg-translucent backdrop-blur-lg border-r-2 border-primary z-10 overflow-y-auto">
+         <div class="p-6">
             <h2 class="text-2xl font-bold gradient-text text-center mb-8 animate-pulse">
-                <i data-feather="gamepad-2" class="inline mr-2"></i> New Tab Games
+               <i data-feather="gamepad-2" class="inline mr-2"></i> New Tab Games
             </h2>
             <nav class="space-y-3">
-                <button onclick="showPage('home')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-                    <i data-feather="home" class="mr-3"></i> Home
-                </button>
-                <button onclick="showPage('updates')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-                    <i data-feather="clock" class="mr-3"></i> Update Log
-                </button>
-                <button onclick="showPage('websites')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-                    <i data-feather="globe" class="mr-3"></i> Game Websites
-                </button>
-                <button onclick="showPage('tabcloaker')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-                    <i data-feather="eye-off" class="mr-3"></i> Tab Cloaker
-                </button>
-                <button onclick="showPage('freeminecraft')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-                    <i data-feather="box" class="mr-3"></i> Free Minecraft
-                </button>
-                <button onclick="showPage('htmlgames')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-                    <i data-feather="code" class="mr-3"></i> HTML Games (Unblockable)
-                </button>
-                <button onclick="showPage('themedesigner')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-                    <i data-feather="palette" class="mr-3"></i> Theme Designer
-                </button>
+               <button onclick="showPage('home')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+               <i data-feather="home" class="mr-3"></i> Home
+               </button>
+               <button onclick="showPage('updates')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+               <i data-feather="clock" class="mr-3"></i> Update Log
+               </button>
+               <button onclick="showPage('websites')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+               <i data-feather="globe" class="mr-3"></i> Game Websites
+               </button>
+               <button onclick="showPage('tabcloaker')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+               <i data-feather="eye-off" class="mr-3"></i> Tab Cloaker
+               </button>
+               <button onclick="showPage('freeminecraft')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+               <i data-feather="box" class="mr-3"></i> Free Minecraft
+               </button>
+               <button onclick="showPage('htmlgames')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+               <i data-feather="code" class="mr-3"></i> HTML Games (Unblockable)
+               </button>
+               <button onclick="showPage('homework')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+               <i data-feather="book-open" class="mr-3"></i> Homework Tracker
+               </button>
+               <button onclick="showPage('themedesigner')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+               <i data-feather="palette" class="mr-3"></i> Theme Designer
+               </button>
             </nav>
-        </div>
-    </div>
-
-    <!-- Floating version badge -->
-    <div class="version-badge fixed top-4 right-6 flex items-center gap-2 z-50 text-xl font-bold">
-        <span class="dot w-3 h-3 bg-gradient-to-r from-purple-400 to-orange-400 rounded-full"></span>
-        <span class="gradient-text ver-text">v6.7.1</span>
-    </div>
-
-    <!-- Main Content -->
-    <div class="ml-64 p-8 min-h-screen relative z-0">
-        <!-- Home -->
-        <div id="home" class="page animate-fadeIn">
+         </div>
+      </div>
+      <!-- Floating version badge -->
+      <div class="version-badge fixed top-4 right-6 flex items-center gap-2 z-50 text-xl font-bold">
+         <span class="dot w-3 h-3 bg-gradient-to-r from-purple-400 to-orange-400 rounded-full"></span>
+         <span class="gradient-text ver-text">v6.7.2</span>
+      </div>
+      <!-- Main Content -->
+      <div class="ml-64 p-8 min-h-screen relative z-0">
+         <!-- Home -->
+         <div id="home" class="page animate-fadeIn">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-6 animate-pulse">
-                    Welcome to New Tab Games
-                </h1>
-                <p class="text-lg mb-8 text-secondary">
-                    Your ultimate collection of unblocked games & links. Can't block this one! <span class="gradient-text">:)</span>
-                </p>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                    <div class="game-card card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 hover:border-primary/50">
-                        <div class="flex items-center mb-4">
-                            <i data-feather="plus-circle" class="text-purple-400 mr-3"></i>
-                            <h3 class="text-xl font-semibold">Request New Games</h3>
-                        </div>
-                        <p class="text-secondary mb-4">Found an awesome game? Let us know!</p>
-                        <a href="https://forms.gle/spFAscDro1LyfyF68" target="_blank" class="inline-flex items-center px-4 py-2 btn-primary font-medium rounded-lg">
-                            <i data-feather="send" class="mr-2"></i> Submit Request
-                        </a>
-                    </div>
-
-                    <div class="game-card card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-secondary/30 hover:border-secondary/50">
-                        <div class="flex items-center mb-4">
-                            <i data-feather="alert-triangle" class="text-orange-400 mr-3"></i>
-                            <h3 class="text-xl font-semibold">Report Issues</h3>
-                        </div>
-                        <p class="text-secondary mb-4">Found a broken link? Help us fix it!</p>
-                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 btn-secondary font-medium rounded-lg">
-                            <i data-feather="alert-octagon" class="mr-2"></i> Report Now
-                        </a>
-                    </div>
-                </div>
-
-                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
-                    <h3 class="text-xl font-semibold mb-4 flex items-center">
-                        <i data-feather="zap" class="text-purple-400 mr-3"></i> Quick Stats
-                    </h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
-                            <div class="gradient-text text-2xl font-bold">25+</div>
-                            <div class="text-secondary text-sm">Games Available</div>
-                        </div>
-                        <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
-                            <div class="gradient-text text-2xl font-bold">Multiple</div>
-                            <div class="text-secondary text-sm">Game Categories</div>
-                        </div>
-                        <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
-                            <div class="gradient-text text-2xl font-bold">4</div>
-                            <div class="text-secondary text-sm">Special Features</div>
-                        </div>
-                        <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
-                            <div class="gradient-text text-2xl font-bold">∞</div>
-                            <div class="text-secondary text-sm">Hours of Fun</div>
-                        </div>
-                    </div>
-
-                    <!-- Visitor Counter -->
-                    <div class="mt-6 flex justify-center">
-                        <a href="https://www.hitwebcounter.com/" target="_blank">
-                            <img src="https://hitwebcounter.com/counter/counter.php?page=21442984&style=0006&nbdigits=5&type=page&initCount=0"
-                                 title="Counters" alt="Counters" border="0" class="rounded-lg" />
-                        </a>
-                    </div>
-                </div>
+               <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-6 animate-pulse">
+                  Welcome to New Tab Games
+               </h1>
+               <p class="text-lg mb-8 text-secondary">
+                  Your ultimate collection of unblocked games & links. Can't block this one! (Im aware of all the blocked links, ill fix it soon) <span class="gradient-text">:)</span>
+               </p>
+               <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                  <div class="game-card card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 hover:border-primary/50">
+                     <div class="flex items-center mb-4">
+                        <i data-feather="plus-circle" class="text-purple-400 mr-3"></i>
+                        <h3 class="text-xl font-semibold">Request New Games</h3>
+                     </div>
+                     <p class="text-secondary mb-4">Found an awesome game? Let us know!</p>
+                     <a href="https://forms.gle/spFAscDro1LyfyF68" target="_blank" class="inline-flex items-center px-4 py-2 btn-primary font-medium rounded-lg">
+                     <i data-feather="send" class="mr-2"></i> Submit Request
+                     </a>
+                  </div>
+                  <div class="game-card card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-secondary/30 hover:border-secondary/50">
+                     <div class="flex items-center mb-4">
+                        <i data-feather="alert-triangle" class="text-orange-400 mr-3"></i>
+                        <h3 class="text-xl font-semibold">Report Issues</h3>
+                     </div>
+                     <p class="text-secondary mb-4">Found a broken link? Help us fix it!</p>
+                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 btn-secondary font-medium rounded-lg">
+                     <i data-feather="alert-octagon" class="mr-2"></i> Report Now
+                     </a>
+                  </div>
+               </div>
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
+                  <h3 class="text-xl font-semibold mb-4 flex items-center">
+                     <i data-feather="zap" class="text-purple-400 mr-3"></i> Quick Stats
+                  </h3>
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                     <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
+                        <div class="gradient-text text-2xl font-bold">25+</div>
+                        <div class="text-secondary text-sm">Games Available</div>
+                     </div>
+                     <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
+                        <div class="gradient-text text-2xl font-bold">Multiple</div>
+                        <div class="text-secondary text-sm">Game Categories</div>
+                     </div>
+                     <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
+                        <div class="gradient-text text-2xl font-bold">5</div>
+                        <div class="text-secondary text-sm">Special Features</div>
+                     </div>
+                     <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
+                        <div class="gradient-text text-2xl font-bold">∞</div>
+                        <div class="text-secondary text-sm">Hours of Fun</div>
+                     </div>
+                  </div>
+                  <!-- Visitor Counter -->
+                  <div class="mt-6 flex justify-center">
+                     <a href="https://www.hitwebcounter.com/" target="_blank">
+                     <img src="https://hitwebcounter.com/counter/counter.php?page=21442984&style=0006&nbdigits=5&type=page&initCount=0"
+                        title="Counters" alt="Counters" border="0" class="rounded-lg" />
+                     </a>
+                  </div>
+               </div>
             </div>
-        </div>
-
-        <!-- Updates -->
-        <div id="updates" class="page hidden">
+         </div>
+         <!-- Updates -->
+         <div id="updates" class="page hidden">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
-                    <i data-feather="clock" class="inline mr-3"></i> Update Log
-                </h1>
-
-                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 overflow-x-auto">
-                    <div class="prose prose-invert max-w-none">
-                        <h3 class="gradient-text">Recent Updates</h3>
-                        <ul class="space-y-4">
-                            <li>
-                                <span class="font-bold gradient-text">10/29/25 - v6.7.1</span>
-                                <ul class="ml-6 list-disc text-secondary">
-                                    <li>Updated Theme</li>
-                                    <li>Added Theme Designer Feature</li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                        <h3 class="gradient-text mt-8">Full History</h3>
-                        <pre class="card-bg-translucent p-4 rounded-lg text-sm overflow-x-auto text-secondary border border-primary/20">
+               <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
+                  <i data-feather="clock" class="inline mr-3"></i> Update Log
+               </h1>
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 overflow-x-auto">
+                  <div class="prose prose-invert max-w-none">
+                     <h3 class="gradient-text">Recent Updates</h3>
+                     <ul class="space-y-4">
+                        <li>
+                           <span class="font-bold gradient-text">1/21/26 - v6.7.2</span>
+                           <ul class="ml-6 list-disc text-secondary">
+                              <li>Added Homework Tracker</li>
+                           </ul>
+                        </li>
+                     </ul>
+                     <h3 class="gradient-text mt-8">Full History</h3>
+                     <pre class="card-bg-translucent p-4 rounded-lg text-sm overflow-x-auto text-secondary border border-primary/20">
 Legacy Update 9/15/22 First Ever v1
 This was the creation date of the first website I have ever made. Rest in peace, "TI-84 Plus CE Calculator"
 (Mind you this is NOT the same website. This current website is 3rd in the series I have made. The 2nd series was, "English Project" which later died to the takedown of JavaScript. This included Embedding and Bookmarks.)
@@ -562,733 +499,732 @@ Created this website
 12/7/25 - v6.7.1
 - Updated Theme
 - Added Theme Designer Feature
+1/21/26 - v6.7.2
+- Added Homework Tracker
                         </pre>
-                    </div>
-                </div>
+                  </div>
+               </div>
             </div>
-        </div>
-
-        <!-- Websites -->
-        <div id="websites" class="page hidden">
+         </div>
+         <!-- Websites -->
+         <div id="websites" class="page hidden">
             <div class="max-w-6xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
-                    <i data-feather="globe" class="inline mr-3"></i> Game Websites
-                </h1>
-
-                <div class="mb-8 flex flex-wrap gap-4">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 btn-danger font-medium rounded-lg">
-                        <i data-feather="alert-triangle" class="mr-2"></i> Report Blocked Link
-                    </a>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <a href="https://nb-ga.github.io/games-site/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Nb-ga Games</span>
-                    </a>
-                    <a href="https://arras.netlify.app/#ed2261" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Arras.io</span>
-                    </a>
-                    <a href="https://getbutterfly.com/fun/google-maps-driving-simulator/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Drive on Google Maps</span>
-                    </a>
-                    <a href="https://www.interactive.onlinemathlearning.com/fun_minesweeper.php" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Minesweeper</span>
-                    </a>
-                    <a href="https://tetris-go.netlify.app/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Tetris</span>
-                    </a>
-                    <a href="https://www.google.com/logos/fnbx/solitaire/standalone.html" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Solitaire</span>
-                    </a>
-                    <a href="https://www.worldguessr.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">GeoGuessr</span>
-                    </a>
-                    <a href="https://noclip.website/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Noclip.site</span>
-                    </a>
-                    <a href="https://www.google.com/logos/2019/july4th19/r6/july4th19.html" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Google Baseball</span>
-                    </a>
-                    <a href="https://quickdraw.withgoogle.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Quick Draw</span>
-                    </a>
-                    <a href="https://neal-fun.firebaseapp.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Ripoff Neal.fun</span>
-                    </a>
-                    <a href="https://www.fusiondex.org/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">FusionDex</span>
-                    </a>
-                    <a href="https://littlealchemy.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Little Alchemy 1</span>
-                    </a>
-                    <a href="https://littlealchemy2.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Little Alchemy 2</span>
-                    </a>
-                    <a href="https://makereal.tldraw.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">MakeReal (Requires API key)</span>
-                    </a>
-                    <a href="https://plirof.github.io/shootr/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Shootr</span>
-                    </a>
-                    <a href="https://sites.google.com/view/jnrvc-tgrfde-erty-btvrd4et-yuy/home?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Elite Gamez</span>
-                    </a>
-                    <a href="https://zenithub.pages.dev/start" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">ZenithHub (Has proxy, untested)</span>
-                    </a>
-                    <a href="https://vm.mathfilm.dk/?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">MathFilm (Working Proxy!!!)</span>
-                    </a>
-                    <a href="https://sites.google.com/view/equations-guide/home?authuser=0" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">ΩMEGA (Emulator + Flash Games)</span>
-                    </a>
-                    <a href="https://arcadehubgaming.github.io/v4/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Arcade Hub (Has like 20 proxies, untested)</span>
-                    </a>
-                    <a href="https://unblockzone.vercel.app/p.html" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">unblockzone v5 (Has proxy, untested)</span>
-                    </a>
-                    <a href="https://raw.githack.com/AlexDuyNguyen/gamesiteallprojects/main/index.html?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Duck With Goose Skin</span>
-                    </a>
-                    <a href="https://sites.google.com/view/dominumnetworkv2/dnv2?authuser=0" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">DNV2 (Has proxies, untested)</span>
-                    </a>
-                    <a href="https://l2x.purpleutilities.xyz/?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">LoungeF2X (Untested proxies, AI does not work)</span>
-                    </a>
-                    <a href="https://nintendoboi222.github.io/#google_vignette" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
-                        <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
-                        <span class="text-secondary group-hover:text-primary transition-colors">Nintendoboi22222222</span>
-                    </a>
-                </div>
+               <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
+                  <i data-feather="globe" class="inline mr-3"></i> Game Websites
+               </h1>
+               <div class="mb-8 flex flex-wrap gap-4">
+                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 btn-danger font-medium rounded-lg">
+                  <i data-feather="alert-triangle" class="mr-2"></i> Report Blocked Link
+                  </a>
+               </div>
+               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <a href="https://nb-ga.github.io/games-site/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Nb-ga Games</span>
+                  </a>
+                  <a href="https://arras.netlify.app/#ed2261" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Arras.io</span>
+                  </a>
+                  <a href="https://getbutterfly.com/fun/google-maps-driving-simulator/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Drive on Google Maps</span>
+                  </a>
+                  <a href="https://www.interactive.onlinemathlearning.com/fun_minesweeper.php" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Minesweeper</span>
+                  </a>
+                  <a href="https://tetris-go.netlify.app/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Tetris</span>
+                  </a>
+                  <a href="https://www.google.com/logos/fnbx/solitaire/standalone.html" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Solitaire</span>
+                  </a>
+                  <a href="https://www.worldguessr.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">GeoGuessr</span>
+                  </a>
+                  <a href="https://noclip.website/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Noclip.site</span>
+                  </a>
+                  <a href="https://www.google.com/logos/2019/july4th19/r6/july4th19.html" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Google Baseball</span>
+                  </a>
+                  <a href="https://quickdraw.withgoogle.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Quick Draw</span>
+                  </a>
+                  <a href="https://neal-fun.firebaseapp.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Ripoff Neal.fun</span>
+                  </a>
+                  <a href="https://www.fusiondex.org/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">FusionDex</span>
+                  </a>
+                  <a href="https://littlealchemy.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Little Alchemy 1</span>
+                  </a>
+                  <a href="https://littlealchemy2.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Little Alchemy 2</span>
+                  </a>
+                  <a href="https://makereal.tldraw.com/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">MakeReal (Requires API key)</span>
+                  </a>
+                  <a href="https://plirof.github.io/shootr/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Shootr</span>
+                  </a>
+                  <a href="https://sites.google.com/view/jnrvc-tgrfde-erty-btvrd4et-yuy/home?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Elite Gamez</span>
+                  </a>
+                  <a href="https://zenithub.pages.dev/start" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">ZenithHub (Has proxy, untested)</span>
+                  </a>
+                  <a href="https://vm.mathfilm.dk/?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">MathFilm (Working Proxy!!!)</span>
+                  </a>
+                  <a href="https://sites.google.com/view/equations-guide/home?authuser=0" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">ΩMEGA (Emulator + Flash Games)</span>
+                  </a>
+                  <a href="https://arcadehubgaming.github.io/v4/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Arcade Hub (Has like 20 proxies, untested)</span>
+                  </a>
+                  <a href="https://unblockzone.vercel.app/p.html" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">unblockzone v5 (Has proxy, untested)</span>
+                  </a>
+                  <a href="https://raw.githack.com/AlexDuyNguyen/gamesiteallprojects/main/index.html?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Duck With Goose Skin</span>
+                  </a>
+                  <a href="https://sites.google.com/view/dominumnetworkv2/dnv2?authuser=0" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">DNV2 (Has proxies, untested)</span>
+                  </a>
+                  <a href="https://l2x.purpleutilities.xyz/?utm_source=ubghub.org&utm_medium=referral&utm_campaign=ubghub.org" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">LoungeF2X (Untested proxies, AI does not work)</span>
+                  </a>
+                  <a href="https://nintendoboi222.github.io/#google_vignette" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">Nintendoboi22222222</span>
+                  </a>
+               </div>
             </div>
-        </div>
-
-        <!-- Tab Cloaker -->
-        <div id="tabcloaker" class="page hidden">
+         </div>
+         <!-- Tab Cloaker -->
+         <div id="tabcloaker" class="page hidden">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
-                    <i data-feather="eye-off" class="inline mr-3"></i> Tab Cloaker
-                </h1>
-
-                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mb-8">
-                    <div class="flex items-start mb-6">
-                        <i data-feather="info" class="text-orange-400 mr-3 mt-1"></i>
-                        <div>
-                            <h3 class="text-xl font-semibold mb-2">Important Note</h3>
-                            <p class="text-secondary">
-                                Your link needs to be unblocked and have embedding allowed for the cloaker to work properly. (You need to download the file and run it)
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap gap-4">
-                        <a href="https://drive.google.com/file/d/1dUOj8oWvXmX4axRTMzCPgjjJ320-U426/view?usp=sharing" target="_blank" class="inline-flex items-center px-4 py-3 btn-gradient font-bold rounded-lg">
-                            <i data-feather="download" class="mr-2"></i> Download Tab Cloaker
-                        </a>
-                    </div>
-                </div>
-
-                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
-                    <h3 class="text-xl font-semibold mb-4 flex items-center">
-                        <i data-feather="shield" class="text-purple-400 mr-3"></i> How It Works
-                    </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
-                            <div class="gradient-text text-2xl mb-2">1</div>
-                            <h4 class="font-semibold mb-2">Download</h4>
-                            <p class="text-secondary text-sm">Get the cloaker tool from the link above</p>
-                        </div>
-                        <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
-                            <div class="gradient-text text-2xl mb-2">2</div>
-                            <h4 class="font-semibold mb-2">Configure</h4>
-                            <p class="text-secondary text-sm">Set up your desired cloaking settings</p>
-                        </div>
-                        <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
-                            <div class="gradient-text text-2xl mb-2">3</div>
-                            <h4 class="font-semibold mb-2">Enjoy</h4>
-                            <p class="text-secondary text-sm">Browse safely with your cloaked tabs</p>
-                        </div>
-                    </div>
-                </div>
+               <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
+                  <i data-feather="eye-off" class="inline mr-3"></i> Tab Cloaker
+               </h1>
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mb-8">
+                  <div class="flex items-start mb-6">
+                     <i data-feather="info" class="text-orange-400 mr-3 mt-1"></i>
+                     <div>
+                        <h3 class="text-xl font-semibold mb-2">Important Note</h3>
+                        <p class="text-secondary">
+                           Your link needs to be unblocked and have embedding allowed for the cloaker to work properly. (You need to download the file and run it)
+                        </p>
+                     </div>
+                  </div>
+                  <div class="flex flex-wrap gap-4">
+                     <a href="https://drive.google.com/file/d/1dUOj8oWvXmX4axRTMzCPgjjJ320-U426/view?usp=sharing" target="_blank" class="inline-flex items-center px-4 py-3 btn-gradient font-bold rounded-lg">
+                     <i data-feather="download" class="mr-2"></i> Download Tab Cloaker
+                     </a>
+                  </div>
+               </div>
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
+                  <h3 class="text-xl font-semibold mb-4 flex items-center">
+                     <i data-feather="shield" class="text-purple-400 mr-3"></i> How It Works
+                  </h3>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                     <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
+                        <div class="gradient-text text-2xl mb-2">1</div>
+                        <h4 class="font-semibold mb-2">Download</h4>
+                        <p class="text-secondary text-sm">Get the cloaker tool from the link above</p>
+                     </div>
+                     <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
+                        <div class="gradient-text text-2xl mb-2">2</div>
+                        <h4 class="font-semibold mb-2">Configure</h4>
+                        <p class="text-secondary text-sm">Set up your desired cloaking settings</p>
+                     </div>
+                     <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
+                        <div class="gradient-text text-2xl mb-2">3</div>
+                        <h4 class="font-semibold mb-2">Enjoy</h4>
+                        <p class="text-secondary text-sm">Browse safely with your cloaked tabs</p>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-
-        <!-- Free Minecraft -->
-        <div id="freeminecraft" class="page hidden">
+         </div>
+         <!-- Free Minecraft -->
+         <div id="freeminecraft" class="page hidden">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
-                    <i data-feather="box" class="inline mr-3"></i> Free Minecraft
-                </h1>
-
-                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mb-8">
-                    <div class="flex items-start mb-6">
-                        <i data-feather="alert-triangle" class="text-orange-400 mr-3 mt-1"></i>
-                        <div>
-                            <h3 class="text-xl font-semibold mb-2">Instructions</h3>
-                            <p class="text-secondary mb-4">
-                                Click on the Eaglercraft file and then click the download button. (Ignore code)
-                                Then store the file somewhere safe and run it.
-                            </p>
-                            <div class="card-bg-translucent p-4 rounded-lg border border-secondary/20">
-                                <h4 class="font-semibold text-orange-400 mb-2">⚠️ WARNING:</h4>
-                                <p class="text-secondary">
-                                    Loading a new survival world on a Chromebook WILL take at least 2–5 minutes to stop lagging.
-                                    This is because Eagler uses your Chromebook as the server and it needs to load chunks. Once it loads all the chunks around you it should stop unless you start moving which will create lag.
-                                </p>
-                            </div>
+               <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
+                  <i data-feather="box" class="inline mr-3"></i> Free Minecraft
+               </h1>
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mb-8">
+                  <div class="flex items-start mb-6">
+                     <i data-feather="alert-triangle" class="text-orange-400 mr-3 mt-1"></i>
+                     <div>
+                        <h3 class="text-xl font-semibold mb-2">Instructions</h3>
+                        <p class="text-secondary mb-4">
+                           Click on the Eaglercraft file and then click the download button. (Ignore code)
+                           Then store the file somewhere safe and run it.
+                        </p>
+                        <div class="card-bg-translucent p-4 rounded-lg border border-secondary/20">
+                           <h4 class="font-semibold text-orange-400 mb-2">⚠️ WARNING:</h4>
+                           <p class="text-secondary">
+                              Loading a new survival world on a Chromebook WILL take at least 2–5 minutes to stop lagging.
+                              This is because Eagler uses your Chromebook as the server and it needs to load chunks. Once it loads all the chunks around you it should stop unless you start moving which will create lag.
+                           </p>
                         </div>
-                    </div>
-
-                    <div class="flex flex-wrap gap-4">
-                        <a href="https://drive.google.com/file/d/18pjUZ_MJHYrUawpUe2DL5mImpKpUOaYn/view?usp=sharing" target="_blank" class="inline-flex items-center px-4 py-3 btn-primary font-bold rounded-lg">
-                            <i data-feather="download" class="mr-2"></i> Download Minecraft 1.8.8
-                        </a>
-                        <a href="https://drive.google.com/file/d/1lQnwB_6FZ-wPXQPg3NxcBTEVJRFxY00u/view" target="_blank" class="inline-flex items-center px-4 py-3 btn-secondary font-bold rounded-lg">
-                            <i data-feather="download" class="mr-2"></i> Download Minecraft 1.9.4 (Recommended)
-                        </a>
-                    </div>
-                </div>
-
-                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
-                    <h3 class="text-xl font-semibold mb-4 flex items-center">
-                        <i data-feather="help-circle" class="text-purple-400 mr-3"></i> Frequently Asked Questions
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
-                            <h4 class="font-semibold gradient-text">Is this really free?</h4>
-                            <p class="text-secondary mt-1">Yes! This is a free version of Minecraft that runs in your browser.</p>
-                        </div>
-                        <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
-                            <h4 class="font-semibold gradient-text">Does it work on Chromebooks?</h4>
-                            <p class="text-secondary mt-1">Yes, but as noted above, there may be some initial lag when loading new worlds.</p>
-                        </div>
-                        <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
-                            <h4 class="font-semibold gradient-text">Is this safe to download?</h4>
-                            <p class="text-secondary mt-1">Of course it is you silly goose.</p>
-                        </div>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+                  <div class="flex flex-wrap gap-4">
+                     <a href="https://drive.google.com/file/d/18pjUZ_MJHYrUawpUe2DL5mImpKpUOaYn/view?usp=sharing" target="_blank" class="inline-flex items-center px-4 py-3 btn-primary font-bold rounded-lg">
+                     <i data-feather="download" class="mr-2"></i> Download Minecraft 1.8.8
+                     </a>
+                     <a href="https://drive.google.com/file/d/1lQnwB_6FZ-wPXQPg3NxcBTEVJRFxY00u/view" target="_blank" class="inline-flex items-center px-4 py-3 btn-secondary font-bold rounded-lg">
+                     <i data-feather="download" class="mr-2"></i> Download Minecraft 1.9.4 (Recommended)
+                     </a>
+                  </div>
+               </div>
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
+                  <h3 class="text-xl font-semibold mb-4 flex items-center">
+                     <i data-feather="help-circle" class="text-purple-400 mr-3"></i> Frequently Asked Questions
+                  </h3>
+                  <div class="space-y-4">
+                     <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
+                        <h4 class="font-semibold gradient-text">Is this really free?</h4>
+                        <p class="text-secondary mt-1">Yes! This is a free version of Minecraft that runs in your browser.</p>
+                     </div>
+                     <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
+                        <h4 class="font-semibold gradient-text">Does it work on Chromebooks?</h4>
+                        <p class="text-secondary mt-1">Yes, but as noted above, there may be some initial lag when loading new worlds.</p>
+                     </div>
+                     <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
+                        <h4 class="font-semibold gradient-text">Is this safe to download?</h4>
+                        <p class="text-secondary mt-1">Of course it is you silly goose.</p>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-
-        <!-- HTML Games Page -->
-        <div id="htmlgames" class="page hidden">
+         </div>
+         <!-- HTML Games Page -->
+         <div id="htmlgames" class="page hidden">
             <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
-                    <i data-feather="code" class="inline mr-3"></i> HTML Games
-                </h1>
-
-                <!-- Instructions Panel -->
-                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mb-8">
-                    <div class="flex items-start mb-6">
-                        <i data-feather="alert-triangle" class="text-orange-400 mr-3 mt-1"></i>
-                        <div>
-                            <h3 class="text-xl font-semibold mb-2">Instructions</h3>
-                            <p class="text-secondary mb-4">
-                                Step 1. Download the PDF<br>
-                                Step 2. Pick a game and click on it<br>
-                                Step 3. Click the install button in the top right<br>
-                                Step 4. Open that file (Game runs in your browser, no link needed!)
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-wrap gap-4">
-                        <a href="https://github.com/NewTabGames/new-tab-games/releases/download/PDF/Ultimate.Game.Stash.pdf" target="_blank" class="inline-flex items-center px-4 py-3 btn-gradient font-bold rounded-lg">
-                            <i data-feather="download" class="mr-2"></i> Download Ultimate Game Stash PDF
-                        </a>
-                    </div>
-                </div>
+               <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
+                  <i data-feather="code" class="inline mr-3"></i> HTML Games
+               </h1>
+               <!-- Instructions Panel -->
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mb-8">
+                  <div class="flex items-start mb-6">
+                     <i data-feather="alert-triangle" class="text-orange-400 mr-3 mt-1"></i>
+                     <div>
+                        <h3 class="text-xl font-semibold mb-2">Instructions</h3>
+                        <p class="text-secondary mb-4">
+                           Step 1. Download the PDF<br>
+                           Step 2. Pick a game and click on it<br>
+                           Step 3. Click the install button in the top right<br>
+                           Step 4. Open that file (Game runs in your browser, no link needed!)
+                        </p>
+                     </div>
+                  </div>
+                  <div class="flex flex-wrap gap-4">
+                     <a href="https://github.com/NewTabGames/new-tab-games/releases/download/PDF/Ultimate.Game.Stash.pdf" target="_blank" class="inline-flex items-center px-4 py-3 btn-gradient font-bold rounded-lg">
+                     <i data-feather="download" class="mr-2"></i> Download Ultimate Game Stash PDF
+                     </a>
+                  </div>
+               </div>
             </div>
-        </div>
-
-        <!-- Theme Designer Page -->
-        <div id="themedesigner" class="page hidden">
+         </div>
+         <!-- Homework Section -->
+         <div id="homework" class="page hidden">
             <div class="max-w-6xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
-                    <i data-feather="palette" class="inline mr-3"></i> Theme Designer
-                </h1>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Theme Controls -->
-                    <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
-                        <h2 class="text-2xl font-bold gradient-text mb-6">Customize Your Theme</h2>
-
-                        <div class="space-y-6">
-                            <!-- Primary Color -->
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Primary Color</label>
-                                <div class="flex items-center space-x-4">
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="primaryColor" value="#a855f7" class="color-input">
-                                    </div>
-                                    <input type="text" id="primaryColorHex" value="#a855f7" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
-                                </div>
-                            </div>
-
-                            <!-- Secondary Color -->
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Secondary Color</label>
-                                <div class="flex items-center space-x-4">
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="secondaryColor" value="#f97316" class="color-input">
-                                    </div>
-                                    <input type="text" id="secondaryColorHex" value="#f97316" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
-                                </div>
-                            </div>
-
-                            <!-- Background Color -->
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Background Color</label>
-                                <div class="flex items-center space-x-4">
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="backgroundColor" value="#111827" class="color-input">
-                                    </div>
-                                    <input type="text" id="backgroundColorHex" value="#111827" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
-                                </div>
-                            </div>
-
-                            <!-- Card Background -->
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Card Background</label>
-                                <div class="flex items-center space-x-4">
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="cardColor" value="#1f2937" class="color-input">
-                                    </div>
-                                    <input type="text" id="cardColorHex" value="#1f2937" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
-                                </div>
-                            </div>
-
-                            <!-- Text Color -->
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Text Color</label>
-                                <div class="flex items-center space-x-4">
-                                    <div class="color-input-wrapper">
-                                        <input type="color" id="textColor" value="#f3f4f6" class="color-input">
-                                    </div>
-                                    <input type="text" id="textColorHex" value="#f3f4f6" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
-                                </div>
-                            </div>
-
-                            <!-- Preset Themes -->
-                            <div>
-                                <label class="block text-sm font-medium mb-2">Preset Themes</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <button onclick="applyPreset('default')" class="px-4 py-2 preset-default rounded-lg">
-                                        Default
-                                    </button>
-                                    <button onclick="applyPreset('ocean')" class="px-4 py-2 preset-ocean rounded-lg">
-                                        Ocean
-                                    </button>
-                                    <button onclick="applyPreset('sunset')" class="px-4 py-2 preset-sunset rounded-lg">
-                                        Sunset
-                                    </button>
-                                    <button onclick="applyPreset('forest')" class="px-4 py-2 preset-forest rounded-lg">
-                                        Forest
-                                    </button>
-                                    <button onclick="applyPreset('midnight')" class="px-4 py-2 preset-midnight rounded-lg">
-                                        Midnight
-                                    </button>
-                                    <button onclick="applyPreset('candy')" class="px-4 py-2 preset-candy rounded-lg">
-                                        Candy
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Action Buttons -->
-                            <div class="flex space-x-4 pt-4">
-                                <button onclick="saveTheme()" class="px-6 py-3 btn-success font-bold rounded-lg">
-                                    <i data-feather="save" class="inline mr-2"></i> Save Theme
-                                </button>
-                                <button onclick="resetTheme()" class="px-6 py-3 card-bg text-primary font-bold rounded-lg hover:bg-gray-600 transition-all duration-300">
-                                    <i data-feather="refresh-cw" class="inline mr-2"></i> Reset
-                                </button>
-                            </div>
+               <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
+                  <i data-feather="book-open" class="inline mr-3"></i> Homework Tracker
+               </h1>
+               <!-- Your Editable Notes / To-Do List Area -->
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mb-8 text-center">
+                  <p class="text-lg text-secondary leading-relaxed" contenteditable="true" spellcheck="false" style="outline: none;">
+                     This tool lets you add assignments and the date for when it is due.
+                  </p>
+                  <p class="text-xs text-secondary mt-2 opacity-50">
+                     (I use this all the time)
+                  </p>
+               </div>
+               <!-- Advertisement for External Tool -->
+               <div class="card-bg-translucent backdrop-blur-sm p-8 rounded-xl border border-secondary/30 mb-8 text-center relative overflow-hidden">
+                  <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-secondary to-primary"></div>
+                  <h2 class="text-2xl font-bold text-secondary mb-4">Homework Tracker Link</h2>
+                  <p class="text-secondary mb-6">Organize your homework lil bro 💔</p>
+                  <a href="https://newtabgames.github.io/Homework/" target="_blank" class="inline-flex items-center px-8 py-4 btn-gradient font-bold rounded-xl shadow-lg transform hover:scale-105 transition-transform">
+                  <i data-feather="external-link" class="mr-3"></i> Open Homework Tracker
+                  </a>
+               </div>
+            </div>
+         </div>
+         <!-- Theme Designer Page -->
+         <div id="themedesigner" class="page hidden">
+            <div class="max-w-6xl mx-auto">
+               <h1 class="text-4xl md:text-5xl font-bold gradient-text mb-8">
+                  <i data-feather="palette" class="inline mr-3"></i> Theme Designer
+               </h1>
+               <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <!-- Theme Controls -->
+                  <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
+                     <h2 class="text-2xl font-bold gradient-text mb-6">Customize Your Theme</h2>
+                     <div class="space-y-6">
+                        <!-- Primary Color -->
+                        <div>
+                           <label class="block text-sm font-medium mb-2">Primary Color</label>
+                           <div class="flex items-center space-x-4">
+                              <div class="color-input-wrapper">
+                                 <input type="color" id="primaryColor" value="#a855f7" class="color-input">
+                              </div>
+                              <input type="text" id="primaryColorHex" value="#a855f7" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
+                           </div>
                         </div>
-                    </div>
-
-                    <!-- Theme Preview -->
-                    <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
-                        <h2 class="text-2xl font-bold gradient-text mb-6">Theme Preview</h2>
-
-                        <div class="theme-preview p-6" id="themePreview" style="background-color: #111827;">
-                            <div class="mb-4">
-                                <h3 class="text-2xl font-bold gradient-text mb-2">Sample Heading</h3>
-                                <p class="text-secondary">This is how your text will appear with the new theme.</p>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4 mb-4">
-                                <div class="p-4 rounded-lg border border-primary/30" style="background-color: rgba(31, 41, 55, 0.5);">
-                                    <h4 class="font-semibold gradient-text mb-2">Card Title</h4>
-                                    <p class="text-secondary text-sm">This is a sample card with your custom theme.</p>
-                                </div>
-                                <div class="p-4 rounded-lg border border-secondary/30" style="background-color: rgba(31, 41, 55, 0.5);">
-                                    <h4 class="font-semibold gradient-text mb-2">Another Card</h4>
-                                    <p class="text-secondary text-sm">Cards will use your selected colors.</p>
-                                </div>
-                            </div>
-
-                            <div class="flex space-x-2">
-                                <button class="px-4 py-2 btn-primary font-medium rounded-lg">
-                                    Primary Button
-                                </button>
-                                <button class="px-4 py-2 btn-secondary font-medium rounded-lg">
-                                    Secondary Button
-                                </button>
-                            </div>
+                        <!-- Secondary Color -->
+                        <div>
+                           <label class="block text-sm font-medium mb-2">Secondary Color</label>
+                           <div class="flex items-center space-x-4">
+                              <div class="color-input-wrapper">
+                                 <input type="color" id="secondaryColor" value="#f97316" class="color-input">
+                              </div>
+                              <input type="text" id="secondaryColorHex" value="#f97316" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
+                           </div>
                         </div>
-
-                        <div class="mt-6 p-4 card-bg-translucent rounded-lg">
-                            <h4 class="font-semibold mb-2">CSS Variables</h4>
-                            <pre class="text-xs text-secondary overflow-x-auto" id="cssVariables">:root {
+                        <!-- Background Color -->
+                        <div>
+                           <label class="block text-sm font-medium mb-2">Background Color</label>
+                           <div class="flex items-center space-x-4">
+                              <div class="color-input-wrapper">
+                                 <input type="color" id="backgroundColor" value="#111827" class="color-input">
+                              </div>
+                              <input type="text" id="backgroundColorHex" value="#111827" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
+                           </div>
+                        </div>
+                        <!-- Card Background -->
+                        <div>
+                           <label class="block text-sm font-medium mb-2">Card Background</label>
+                           <div class="flex items-center space-x-4">
+                              <div class="color-input-wrapper">
+                                 <input type="color" id="cardColor" value="#1f2937" class="color-input">
+                              </div>
+                              <input type="text" id="cardColorHex" value="#1f2937" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
+                           </div>
+                        </div>
+                        <!-- Text Color -->
+                        <div>
+                           <label class="block text-sm font-medium mb-2">Text Color</label>
+                           <div class="flex items-center space-x-4">
+                              <div class="color-input-wrapper">
+                                 <input type="color" id="textColor" value="#f3f4f6" class="color-input">
+                              </div>
+                              <input type="text" id="textColorHex" value="#f3f4f6" class="card-bg text-primary px-3 py-2 rounded-lg flex-1">
+                           </div>
+                        </div>
+                        <!-- Preset Themes -->
+                        <div>
+                           <label class="block text-sm font-medium mb-2">Preset Themes</label>
+                           <div class="grid grid-cols-2 gap-2">
+                              <button onclick="applyPreset('default')" class="px-4 py-2 preset-default rounded-lg">
+                              Default
+                              </button>
+                              <button onclick="applyPreset('ocean')" class="px-4 py-2 preset-ocean rounded-lg">
+                              Ocean
+                              </button>
+                              <button onclick="applyPreset('sunset')" class="px-4 py-2 preset-sunset rounded-lg">
+                              Sunset
+                              </button>
+                              <button onclick="applyPreset('forest')" class="px-4 py-2 preset-forest rounded-lg">
+                              Forest
+                              </button>
+                              <button onclick="applyPreset('midnight')" class="px-4 py-2 preset-midnight rounded-lg">
+                              Midnight
+                              </button>
+                              <button onclick="applyPreset('candy')" class="px-4 py-2 preset-candy rounded-lg">
+                              Candy
+                              </button>
+                           </div>
+                        </div>
+                        <!-- Action Buttons -->
+                        <div class="flex space-x-4 pt-4">
+                           <button onclick="saveTheme()" class="px-6 py-3 btn-success font-bold rounded-lg">
+                           <i data-feather="save" class="inline mr-2"></i> Save Theme
+                           </button>
+                           <button onclick="resetTheme()" class="px-6 py-3 card-bg text-primary font-bold rounded-lg hover:bg-gray-600 transition-all duration-300">
+                           <i data-feather="refresh-cw" class="inline mr-2"></i> Reset
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+                  <!-- Theme Preview -->
+                  <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
+                     <h2 class="text-2xl font-bold gradient-text mb-6">Theme Preview</h2>
+                     <div class="theme-preview p-6" id="themePreview" style="background-color: #111827;">
+                        <div class="mb-4">
+                           <h3 class="text-2xl font-bold gradient-text mb-2">Sample Heading</h3>
+                           <p class="text-secondary">This is how your text will appear with the new theme.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-4">
+                           <div class="p-4 rounded-lg border border-primary/30" style="background-color: rgba(31, 41, 55, 0.5);">
+                              <h4 class="font-semibold gradient-text mb-2">Card Title</h4>
+                              <p class="text-secondary text-sm">This is a sample card with your custom theme.</p>
+                           </div>
+                           <div class="p-4 rounded-lg border border-secondary/30" style="background-color: rgba(31, 41, 55, 0.5);">
+                              <h4 class="font-semibold gradient-text mb-2">Another Card</h4>
+                              <p class="text-secondary text-sm">Cards will use your selected colors.</p>
+                           </div>
+                        </div>
+                        <div class="flex space-x-2">
+                           <button class="px-4 py-2 btn-primary font-medium rounded-lg">
+                           Primary Button
+                           </button>
+                           <button class="px-4 py-2 btn-secondary font-medium rounded-lg">
+                           Secondary Button
+                           </button>
+                        </div>
+                     </div>
+                     <div class="mt-6 p-4 card-bg-translucent rounded-lg">
+                        <h4 class="font-semibold mb-2">CSS Variables</h4>
+                        <pre class="text-xs text-secondary overflow-x-auto" id="cssVariables">:root {
   --primary-color: #a855f7;
   --secondary-color: #f97316;
   --background-color: #111827;
   --card-color: #1f2937;
   --text-color: #f3f4f6;
 }</pre>
-                        </div>
-                    </div>
-                </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
-
-    <script>
-        feather.replace();
-
-        // Theme Designer Functions
-        const defaultTheme = {
-            primaryColor: '#a855f7',
-            secondaryColor: '#f97316',
-            backgroundColor: '#111827',
-            cardColor: '#1f2937',
-            textColor: '#f3f4f6'
-        };
-
-        const presetThemes = {
-            default: {
-                primaryColor: '#a855f7',
-                secondaryColor: '#f97316',
-                backgroundColor: '#111827',
-                cardColor: '#1f2937',
-                textColor: '#f3f4f6'
-            },
-            ocean: {
-                primaryColor: '#3b82f6',
-                secondaryColor: '#14b8a6',
-                backgroundColor: '#0f172a',
-                cardColor: '#1e293b',
-                textColor: '#f1f5f9'
-            },
-            sunset: {
-                primaryColor: '#ec4899',
-                secondaryColor: '#f59e0b',
-                backgroundColor: '#18181b',
-                cardColor: '#27272a',
-                textColor: '#fafafa'
-            },
-            forest: {
-                primaryColor: '#10b981',
-                secondaryColor: '#84cc16',
-                backgroundColor: '#052e16',
-                cardColor: '#14532d',
-                textColor: '#f0fdf4'
-            },
-            midnight: {
-                primaryColor: '#6366f1',
-                secondaryColor: '#a855f7',
-                backgroundColor: '#0f0f23',
-                cardColor: '#1a1a2e',
-                textColor: '#e2e8f0'
-            },
-            candy: {
-                primaryColor: '#ec4899',
-                secondaryColor: '#a855f7',
-                backgroundColor: '#1f0529',
-                cardColor: '#2e1065',
-                textColor: '#fdf4ff'
-            }
-        };
-
-        // Initialize theme from localStorage or use default
-        let currentTheme = JSON.parse(localStorage.getItem('customTheme')) || { ...defaultTheme };
-
-        // Apply theme on page load
-        document.addEventListener('DOMContentLoaded', function () {
-            applyTheme(currentTheme);
-            updateThemeControls();
-        });
-
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.add('hidden');
-            });
-            document.getElementById(pageId).classList.remove('hidden');
-
-            // Update sidebar active state
-            document.querySelectorAll('.sidebar-link').forEach(link => {
-                link.classList.remove('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
-                link.classList.add('hover:bg-gray-700/50');
-            });
-
-            event.target.classList.remove('hover:bg-gray-700/50');
-            event.target.classList.add('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
-        }
-
-        function applyTheme(theme) {
-            // Set CSS variables
-            document.documentElement.style.setProperty('--primary-color', theme.primaryColor);
-            document.documentElement.style.setProperty('--secondary-color', theme.secondaryColor);
-            document.documentElement.style.setProperty('--background-color', theme.backgroundColor);
-            document.documentElement.style.setProperty('--card-color', theme.cardColor);
-            document.documentElement.style.setProperty('--text-color', theme.textColor);
-
-            // Set RGB values for shadows and other effects
-            const primaryRgb = hexToRgb(theme.primaryColor);
-            const secondaryRgb = hexToRgb(theme.secondaryColor);
-            const cardRgb = hexToRgb(theme.cardColor);
-
-            document.documentElement.style.setProperty('--primary-rgb', primaryRgb);
-            document.documentElement.style.setProperty('--secondary-rgb', secondaryRgb);
-            document.documentElement.style.setProperty('--card-rgb', cardRgb);
-
-            // Calculate hover and active colors for buttons
-            const primaryHover = adjustColor(theme.primaryColor, -20);
-            const primaryActive = adjustColor(theme.primaryColor, -40);
-            const secondaryHover = adjustColor(theme.secondaryColor, -20);
-            const secondaryActive = adjustColor(theme.secondaryColor, -40);
-
-            document.documentElement.style.setProperty('--primary-hover-color', primaryHover);
-            document.documentElement.style.setProperty('--primary-active-color', primaryActive);
-            document.documentElement.style.setProperty('--secondary-hover-color', secondaryHover);
-            document.documentElement.style.setProperty('--secondary-active-color', secondaryActive);
-
-            // Calculate a slightly lighter text color for secondary text
-            const textColorRgb = hexToRgb(theme.textColor);
-            const secondaryTextColor = `rgba(${textColorRgb}, 0.7)`;
-            document.documentElement.style.setProperty('--text-secondary-color', secondaryTextColor);
-
-            // Apply theme to preview if on theme designer page
-            if (document.getElementById('themePreview')) {
-                document.getElementById('themePreview').style.backgroundColor = theme.backgroundColor;
-                updateThemePreview(theme);
-            }
-
-            // Update CSS variables display
-            if (document.getElementById('cssVariables')) {
-                document.getElementById('cssVariables').textContent = `:root {
-          --primary-color: ${theme.primaryColor};
-          --secondary-color: ${theme.secondaryColor};
-          --background-color: ${theme.backgroundColor};
-          --card-color: ${theme.cardColor};
-          --text-color: ${theme.textColor}`;
-            }
-        }
-
-        function updateThemePreview(theme) {
-            const preview = document.getElementById('themePreview');
-            if (!preview) return;
-
-            // Update card backgrounds
-            const cards = preview.querySelectorAll('[style*="background-color"]');
-            cards.forEach(card => {
-                const currentBg = card.style.backgroundColor;
-                if (currentBg.includes('31, 41, 55')) { // Default card color
-                    card.style.backgroundColor = hexToRgba(theme.cardColor, 0.5);
-                }
-            });
-        }
-
-        function updateThemeControls() {
-            document.getElementById('primaryColor').value = currentTheme.primaryColor;
-            document.getElementById('primaryColorHex').value = currentTheme.primaryColor;
-            document.getElementById('secondaryColor').value = currentTheme.secondaryColor;
-            document.getElementById('secondaryColorHex').value = currentTheme.secondaryColor;
-            document.getElementById('backgroundColor').value = currentTheme.backgroundColor;
-            document.getElementById('backgroundColorHex').value = currentTheme.backgroundColor;
-            document.getElementById('cardColor').value = currentTheme.cardColor;
-            document.getElementById('cardColorHex').value = currentTheme.cardColor;
-            document.getElementById('textColor').value = currentTheme.textColor;
-            document.getElementById('textColorHex').value = currentTheme.textColor;
-        }
-
-        function saveTheme() {
-            currentTheme = {
-                primaryColor: document.getElementById('primaryColor').value,
-                secondaryColor: document.getElementById('secondaryColor').value,
-                backgroundColor: document.getElementById('backgroundColor').value,
-                cardColor: document.getElementById('cardColor').value,
-                textColor: document.getElementById('textColor').value
-            };
-
-            localStorage.setItem('customTheme', JSON.stringify(currentTheme));
-            applyTheme(currentTheme);
-
-            // Show success message
-            const saveButton = event.target;
-            const originalText = saveButton.innerHTML;
-            saveButton.innerHTML = '<i data-feather="check" class="inline mr-2"></i> Saved!';
-            saveButton.classList.add('from-green-600', 'to-green-700');
-
-            setTimeout(() => {
-                saveButton.innerHTML = originalText;
-                saveButton.classList.remove('from-green-600', 'to-green-700');
-                feather.replace();
-            }, 2000);
-        }
-
-        function resetTheme() {
-            currentTheme = { ...defaultTheme };
-            localStorage.removeItem('customTheme');
-            applyTheme(currentTheme);
-            updateThemeControls();
-        }
-
-        function applyPreset(presetName) {
-            // Create a deep copy of the preset theme to avoid modifying the original
-            currentTheme = JSON.parse(JSON.stringify(presetThemes[presetName]));
-            applyTheme(currentTheme);
-            updateThemeControls();
-        }
-
-        function hexToRgb(hex) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ?
-                `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` :
-                '168, 85, 247';
-        }
-
-        function hexToRgba(hex, alpha) {
-            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-            return result ?
-                `rgba(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}, ${alpha})` :
-                `rgba(31, 41, 55, ${alpha})`;
-        }
-
-        // Adjust color brightness
-        function adjustColor(hex, percent) {
-            // Convert hex to RGB
-            const num = parseInt(hex.replace("#", ""), 16);
-            const amt = Math.round(2.55 * percent);
-            const R = (num >> 16) + amt;
-            const G = (num >> 8 & 0x00FF) + amt;
-            const B = (num & 0x0000FF) + amt;
-
-            // Ensure values are within valid range
-            const r = R > 255 ? 255 : R < 0 ? 0 : R;
-            const g = G > 255 ? 255 : G < 0 ? 0 : G;
-            const b = B > 255 ? 255 : B < 0 ? 0 : B;
-
-            // Convert back to hex
-            return "#" + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
-        }
-
-        // Color input event listeners
-        document.getElementById('primaryColor').addEventListener('input', function (e) {
-            currentTheme.primaryColor = e.target.value;
-            document.getElementById('primaryColorHex').value = e.target.value;
-            applyTheme(currentTheme);
-        });
-
-        document.getElementById('primaryColorHex').addEventListener('input', function (e) {
-            if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
-                currentTheme.primaryColor = e.target.value;
-                document.getElementById('primaryColor').value = e.target.value;
-                applyTheme(currentTheme);
-            }
-        });
-
-        document.getElementById('secondaryColor').addEventListener('input', function (e) {
-            currentTheme.secondaryColor = e.target.value;
-            document.getElementById('secondaryColorHex').value = e.target.value;
-            applyTheme(currentTheme);
-        });
-
-        document.getElementById('secondaryColorHex').addEventListener('input', function (e) {
-            if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
-                currentTheme.secondaryColor = e.target.value;
-                document.getElementById('secondaryColor').value = e.target.value;
-                applyTheme(currentTheme);
-            }
-        });
-
-        document.getElementById('backgroundColor').addEventListener('input', function (e) {
-            currentTheme.backgroundColor = e.target.value;
-            document.getElementById('backgroundColorHex').value = e.target.value;
-            applyTheme(currentTheme);
-        });
-
-        document.getElementById('backgroundColorHex').addEventListener('input', function (e) {
-            if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
-                currentTheme.backgroundColor = e.target.value;
-                document.getElementById('backgroundColor').value = e.target.value;
-                applyTheme(currentTheme);
-            }
-        });
-
-        document.getElementById('cardColor').addEventListener('input', function (e) {
-            currentTheme.cardColor = e.target.value;
-            document.getElementById('cardColorHex').value = e.target.value;
-            applyTheme(currentTheme);
-        });
-
-        document.getElementById('cardColorHex').addEventListener('input', function (e) {
-            if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
-                currentTheme.cardColor = e.target.value;
-                document.getElementById('cardColor').value = e.target.value;
-                applyTheme(currentTheme);
-            }
-        });
-
-        document.getElementById('textColor').addEventListener('input', function (e) {
-            currentTheme.textColor = e.target.value;
-            document.getElementById('textColorHex').value = e.target.value;
-            applyTheme(currentTheme);
-        });
-
-        document.getElementById('textColorHex').addEventListener('input', function (e) {
-            if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
-                currentTheme.textColor = e.target.value;
-                document.getElementById('textColor').value = e.target.value;
-                applyTheme(currentTheme);
-            }
-        });
-
-        // ensure Home visible on load
-        window.onload = () => {
-            showPage('home');
-            document.querySelector('.sidebar-link').classList.add('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
-            document.querySelector('.sidebar-link').classList.remove('hover:bg-gray-700/50');
-            feather.replace();
-        };
-    </script>
-</body>
+         </div>
+      </div>
+      <script>
+         feather.replace();
+         
+         // Theme Designer Functions
+         const defaultTheme = {
+             primaryColor: '#a855f7',
+             secondaryColor: '#f97316',
+             backgroundColor: '#111827',
+             cardColor: '#1f2937',
+             textColor: '#f3f4f6'
+         };
+         
+         const presetThemes = {
+             default: {
+                 primaryColor: '#a855f7',
+                 secondaryColor: '#f97316',
+                 backgroundColor: '#111827',
+                 cardColor: '#1f2937',
+                 textColor: '#f3f4f6'
+             },
+             ocean: {
+                 primaryColor: '#3b82f6',
+                 secondaryColor: '#14b8a6',
+                 backgroundColor: '#0f172a',
+                 cardColor: '#1e293b',
+                 textColor: '#f1f5f9'
+             },
+             sunset: {
+                 primaryColor: '#ec4899',
+                 secondaryColor: '#f59e0b',
+                 backgroundColor: '#18181b',
+                 cardColor: '#27272a',
+                 textColor: '#fafafa'
+             },
+             forest: {
+                 primaryColor: '#10b981',
+                 secondaryColor: '#84cc16',
+                 backgroundColor: '#052e16',
+                 cardColor: '#14532d',
+                 textColor: '#f0fdf4'
+             },
+             midnight: {
+                 primaryColor: '#6366f1',
+                 secondaryColor: '#a855f7',
+                 backgroundColor: '#0f0f23',
+                 cardColor: '#1a1a2e',
+                 textColor: '#e2e8f0'
+             },
+             candy: {
+                 primaryColor: '#ec4899',
+                 secondaryColor: '#a855f7',
+                 backgroundColor: '#1f0529',
+                 cardColor: '#2e1065',
+                 textColor: '#fdf4ff'
+             }
+         };
+         
+         // Initialize theme from localStorage or use default
+         let currentTheme = JSON.parse(localStorage.getItem('customTheme')) || { ...defaultTheme };
+         
+         // Apply theme on page load
+         document.addEventListener('DOMContentLoaded', function () {
+             applyTheme(currentTheme);
+             updateThemeControls();
+         });
+         
+         function showPage(pageId) {
+             document.querySelectorAll('.page').forEach(page => {
+                 page.classList.add('hidden');
+             });
+             document.getElementById(pageId).classList.remove('hidden');
+         
+             // Update sidebar active state
+             document.querySelectorAll('.sidebar-link').forEach(link => {
+                 link.classList.remove('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
+                 link.classList.add('hover:bg-gray-700/50');
+             });
+         
+             event.target.classList.remove('hover:bg-gray-700/50');
+             event.target.classList.add('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
+         }
+         
+         function applyTheme(theme) {
+             // Set CSS variables
+             document.documentElement.style.setProperty('--primary-color', theme.primaryColor);
+             document.documentElement.style.setProperty('--secondary-color', theme.secondaryColor);
+             document.documentElement.style.setProperty('--background-color', theme.backgroundColor);
+             document.documentElement.style.setProperty('--card-color', theme.cardColor);
+             document.documentElement.style.setProperty('--text-color', theme.textColor);
+         
+             // Set RGB values for shadows and other effects
+             const primaryRgb = hexToRgb(theme.primaryColor);
+             const secondaryRgb = hexToRgb(theme.secondaryColor);
+             const cardRgb = hexToRgb(theme.cardColor);
+         
+             document.documentElement.style.setProperty('--primary-rgb', primaryRgb);
+             document.documentElement.style.setProperty('--secondary-rgb', secondaryRgb);
+             document.documentElement.style.setProperty('--card-rgb', cardRgb);
+         
+             // Calculate hover and active colors for buttons
+             const primaryHover = adjustColor(theme.primaryColor, -20);
+             const primaryActive = adjustColor(theme.primaryColor, -40);
+             const secondaryHover = adjustColor(theme.secondaryColor, -20);
+             const secondaryActive = adjustColor(theme.secondaryColor, -40);
+         
+             document.documentElement.style.setProperty('--primary-hover-color', primaryHover);
+             document.documentElement.style.setProperty('--primary-active-color', primaryActive);
+             document.documentElement.style.setProperty('--secondary-hover-color', secondaryHover);
+             document.documentElement.style.setProperty('--secondary-active-color', secondaryActive);
+         
+             // Calculate a slightly lighter text color for secondary text
+             const textColorRgb = hexToRgb(theme.textColor);
+             const secondaryTextColor = `rgba(${textColorRgb}, 0.7)`;
+             document.documentElement.style.setProperty('--text-secondary-color', secondaryTextColor);
+         
+             // Apply theme to preview if on theme designer page
+             if (document.getElementById('themePreview')) {
+                 document.getElementById('themePreview').style.backgroundColor = theme.backgroundColor;
+                 updateThemePreview(theme);
+             }
+         
+             // Update CSS variables display
+             if (document.getElementById('cssVariables')) {
+                 document.getElementById('cssVariables').textContent = `:root {
+           --primary-color: ${theme.primaryColor};
+           --secondary-color: ${theme.secondaryColor};
+           --background-color: ${theme.backgroundColor};
+           --card-color: ${theme.cardColor};
+           --text-color: ${theme.textColor}`;
+             }
+         }
+         
+         function updateThemePreview(theme) {
+             const preview = document.getElementById('themePreview');
+             if (!preview) return;
+         
+             // Update card backgrounds
+             const cards = preview.querySelectorAll('[style*="background-color"]');
+             cards.forEach(card => {
+                 const currentBg = card.style.backgroundColor;
+                 if (currentBg.includes('31, 41, 55')) { // Default card color
+                     card.style.backgroundColor = hexToRgba(theme.cardColor, 0.5);
+                 }
+             });
+         }
+         
+         function updateThemeControls() {
+             document.getElementById('primaryColor').value = currentTheme.primaryColor;
+             document.getElementById('primaryColorHex').value = currentTheme.primaryColor;
+             document.getElementById('secondaryColor').value = currentTheme.secondaryColor;
+             document.getElementById('secondaryColorHex').value = currentTheme.secondaryColor;
+             document.getElementById('backgroundColor').value = currentTheme.backgroundColor;
+             document.getElementById('backgroundColorHex').value = currentTheme.backgroundColor;
+             document.getElementById('cardColor').value = currentTheme.cardColor;
+             document.getElementById('cardColorHex').value = currentTheme.cardColor;
+             document.getElementById('textColor').value = currentTheme.textColor;
+             document.getElementById('textColorHex').value = currentTheme.textColor;
+         }
+         
+         function saveTheme() {
+             currentTheme = {
+                 primaryColor: document.getElementById('primaryColor').value,
+                 secondaryColor: document.getElementById('secondaryColor').value,
+                 backgroundColor: document.getElementById('backgroundColor').value,
+                 cardColor: document.getElementById('cardColor').value,
+                 textColor: document.getElementById('textColor').value
+             };
+         
+             localStorage.setItem('customTheme', JSON.stringify(currentTheme));
+             applyTheme(currentTheme);
+         
+             // Show success message
+             const saveButton = event.target;
+             const originalText = saveButton.innerHTML;
+             saveButton.innerHTML = '<i data-feather="check" class="inline mr-2"></i> Saved!';
+             saveButton.classList.add('from-green-600', 'to-green-700');
+         
+             setTimeout(() => {
+                 saveButton.innerHTML = originalText;
+                 saveButton.classList.remove('from-green-600', 'to-green-700');
+                 feather.replace();
+             }, 2000);
+         }
+         
+         function resetTheme() {
+             currentTheme = { ...defaultTheme };
+             localStorage.removeItem('customTheme');
+             applyTheme(currentTheme);
+             updateThemeControls();
+         }
+         
+         function applyPreset(presetName) {
+             // Create a deep copy of the preset theme to avoid modifying the original
+             currentTheme = JSON.parse(JSON.stringify(presetThemes[presetName]));
+             applyTheme(currentTheme);
+             updateThemeControls();
+         }
+         
+         function hexToRgb(hex) {
+             const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+             return result ?
+                 `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` :
+                 '168, 85, 247';
+         }
+         
+         function hexToRgba(hex, alpha) {
+             const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+             return result ?
+                 `rgba(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}, ${alpha})` :
+                 `rgba(31, 41, 55, ${alpha})`;
+         }
+         
+         // Adjust color brightness
+         function adjustColor(hex, percent) {
+             // Convert hex to RGB
+             const num = parseInt(hex.replace("#", ""), 16);
+             const amt = Math.round(2.55 * percent);
+             const R = (num >> 16) + amt;
+             const G = (num >> 8 & 0x00FF) + amt;
+             const B = (num & 0x0000FF) + amt;
+         
+             // Ensure values are within valid range
+             const r = R > 255 ? 255 : R < 0 ? 0 : R;
+             const g = G > 255 ? 255 : G < 0 ? 0 : G;
+             const b = B > 255 ? 255 : B < 0 ? 0 : B;
+         
+             // Convert back to hex
+             return "#" + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+         }
+         
+         // Color input event listeners
+         document.getElementById('primaryColor').addEventListener('input', function (e) {
+             currentTheme.primaryColor = e.target.value;
+             document.getElementById('primaryColorHex').value = e.target.value;
+             applyTheme(currentTheme);
+         });
+         
+         document.getElementById('primaryColorHex').addEventListener('input', function (e) {
+             if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                 currentTheme.primaryColor = e.target.value;
+                 document.getElementById('primaryColor').value = e.target.value;
+                 applyTheme(currentTheme);
+             }
+         });
+         
+         document.getElementById('secondaryColor').addEventListener('input', function (e) {
+             currentTheme.secondaryColor = e.target.value;
+             document.getElementById('secondaryColorHex').value = e.target.value;
+             applyTheme(currentTheme);
+         });
+         
+         document.getElementById('secondaryColorHex').addEventListener('input', function (e) {
+             if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                 currentTheme.secondaryColor = e.target.value;
+                 document.getElementById('secondaryColor').value = e.target.value;
+                 applyTheme(currentTheme);
+             }
+         });
+         
+         document.getElementById('backgroundColor').addEventListener('input', function (e) {
+             currentTheme.backgroundColor = e.target.value;
+             document.getElementById('backgroundColorHex').value = e.target.value;
+             applyTheme(currentTheme);
+         });
+         
+         document.getElementById('backgroundColorHex').addEventListener('input', function (e) {
+             if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                 currentTheme.backgroundColor = e.target.value;
+                 document.getElementById('backgroundColor').value = e.target.value;
+                 applyTheme(currentTheme);
+             }
+         });
+         
+         document.getElementById('cardColor').addEventListener('input', function (e) {
+             currentTheme.cardColor = e.target.value;
+             document.getElementById('cardColorHex').value = e.target.value;
+             applyTheme(currentTheme);
+         });
+         
+         document.getElementById('cardColorHex').addEventListener('input', function (e) {
+             if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                 currentTheme.cardColor = e.target.value;
+                 document.getElementById('cardColor').value = e.target.value;
+                 applyTheme(currentTheme);
+             }
+         });
+         
+         document.getElementById('textColor').addEventListener('input', function (e) {
+             currentTheme.textColor = e.target.value;
+             document.getElementById('textColorHex').value = e.target.value;
+             applyTheme(currentTheme);
+         });
+         
+         document.getElementById('textColorHex').addEventListener('input', function (e) {
+             if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+                 currentTheme.textColor = e.target.value;
+                 document.getElementById('textColor').value = e.target.value;
+                 applyTheme(currentTheme);
+             }
+         });
+         
+         // ensure Home visible on load
+         window.onload = () => {
+             showPage('home');
+             document.querySelector('.sidebar-link').classList.add('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
+             document.querySelector('.sidebar-link').classList.remove('hover:bg-gray-700/50');
+             feather.replace();
+         };
+      </script>
+   </body>
 </html>
