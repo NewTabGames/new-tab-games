@@ -54,6 +54,10 @@
          .sidebar-link:hover::after {
          width: 100%;
          }
+         .sidebar-active {
+         background: linear-gradient(to right, rgba(var(--primary-rgb, 168, 85, 247), 0.2), rgba(var(--secondary-rgb, 249, 115, 22), 0.15)) !important;
+         border: 1px solid rgba(var(--primary-rgb, 168, 85, 247), 0.35) !important;
+         }
          .version-badge .dot {
          animation: pulse-dot 1400ms infinite ease-in-out;
          background: linear-gradient(to right, var(--primary-color, #a855f7), var(--secondary-color, #f97316));
@@ -268,6 +272,54 @@
          background: linear-gradient(to right, #db2777, #9333ea);
          opacity: 0.9;
          }
+         .preset-neon {
+         background: linear-gradient(to right, #22d3ee, #a3e635);
+         color: #0a0a0a;
+         transition: all 0.3s ease;
+         }
+         .preset-neon:hover { opacity: 0.85; }
+         .preset-rosegold {
+         background: linear-gradient(to right, #f43f5e, #d4a373);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-rosegold:hover { opacity: 0.85; }
+         .preset-arctic {
+         background: linear-gradient(to right, #7dd3fc, #e0f2fe);
+         color: #0c4a6e;
+         transition: all 0.3s ease;
+         }
+         .preset-arctic:hover { opacity: 0.85; }
+         .preset-lava {
+         background: linear-gradient(to right, #ef4444, #f97316);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-lava:hover { opacity: 0.85; }
+         .preset-void {
+         background: linear-gradient(to right, #4c1d95, #1e1b4b);
+         color: #c4b5fd;
+         transition: all 0.3s ease;
+         }
+         .preset-void:hover { opacity: 0.85; }
+         .preset-cyber {
+         background: linear-gradient(to right, #facc15, #4ade80);
+         color: #0a0a0a;
+         transition: all 0.3s ease;
+         }
+         .preset-cyber:hover { opacity: 0.85; }
+         .preset-autumn {
+         background: linear-gradient(to right, #b45309, #84cc16);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-autumn:hover { opacity: 0.85; }
+         .preset-aqua {
+         background: linear-gradient(to right, #06b6d4, #8b5cf6);
+         color: white;
+         transition: all 0.3s ease;
+         }
+         .preset-aqua:hover { opacity: 0.85; }
       </style>
    </head>
    <body class="main-bg text-primary font-sans overflow-x-hidden">
@@ -317,7 +369,7 @@
       <!-- Floating version badge -->
       <div class="version-badge fixed top-4 right-6 flex items-center gap-2 z-50 text-xl font-bold">
          <span class="dot w-3 h-3 rounded-full"></span>
-         <span class="gradient-text ver-text">v6.7.3</span>
+         <span class="gradient-text ver-text">v6.7.4</span>
       </div>
       <!-- Main Content -->
       <div class="ml-64 p-8 min-h-screen relative z-0">
@@ -358,8 +410,8 @@
                   </h3>
                   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                      <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
-                        <div class="gradient-text text-2xl font-bold">25+</div>
-                        <div class="text-secondary text-sm">Games Available</div>
+                        <div class="gradient-text text-2xl font-bold">35+</div>
+                        <div class="text-secondary text-sm">Links Available</div>
                      </div>
                      <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
                         <div class="gradient-text text-2xl font-bold">Multiple</div>
@@ -382,9 +434,16 @@
                      </a>
                   </div>
                </div>
+               <!-- Recently Visited -->
+               <div id="recentlyVisitedSection" class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mt-6">
+                  <h3 class="text-xl font-semibold mb-4 flex items-center">
+                     <i data-feather="clock" class="text-orange-400 mr-3"></i> Recently Visited
+                  </h3>
+                  <div id="recentlyVisitedList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+                  <p id="recentlyVisitedEmpty" class="text-secondary text-sm opacity-60">No recently visited games yet — click a game link to get started!</p>
+               </div>
             </div>
          </div>
-         <!-- Updates -->
          <div id="updates" class="page hidden">
             <div class="page-with-title max-w-4xl mx-auto">
                <h1 class="page-title text-4xl md:text-5xl font-bold gradient-text mb-8">
@@ -395,14 +454,16 @@
                      <h3 class="gradient-text">Recent Updates</h3>
                      <ul class="space-y-4">
                         <li>
-                           <span class="font-bold gradient-text">3/13/26 - v6.7.3</span>
+                           <span class="font-bold gradient-text">3/15/26 - v6.7.4</span>
                            <ul class="ml-6 list-disc text-secondary">
-                              <li>Added 2 new AI methods</li>
+                              <li>Added Recently Visited List</li>
+							  <li>Added Favorites System</li>
+							  <li>Added 8 More Themes</li>
                            </ul>
                         </li>
                      </ul>
                      <h3 class="gradient-text mt-8">Full History</h3>
-                     <pre class="card-bg-translucent p-4 rounded-lg text-sm overflow-x-auto text-secondary border border-primary/20">
+                     <pre class="card-bg-translucent p-4 rounded-lg text-sm overflow-x-auto text-secondary border border-primary/20" style="max-height: 400px; overflow-y: auto;">
 Legacy Update 9/15/22 First Ever v1
 This was the creation date of the first website I have ever made. Rest in peace, "TI-84 Plus CE Calculator"
 (Mind you this is NOT the same website. This current website is 3rd in the series I have made. The 2nd series was, "English Project" which later died to the takedown of JavaScript. This included Embedding and Bookmarks.)
@@ -522,6 +583,10 @@ Created this website
 - Added Homework Tracker
 3/13/26 - v6.7.3
 - Added 2 new AI methods
+3/15/26 - v6.7.4
+- Added Recently Visited List
+- Added Favorites System
+- Added 8 More Themes
                         </pre>
                   </div>
                </div>
@@ -542,6 +607,9 @@ Created this website
                         <a href="https://www.bing.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
                         <i data-feather="external-link" class="mr-2"></i> Open Bing
                         </a>
+                        <button onclick="copyLink('https://www.bing.com/')" class="inline-flex items-center px-4 py-2 card-bg border border-primary/30 hover:border-primary/60 font-medium rounded-lg transition-all duration-200 ml-2" id="copyBing">
+                        <i data-feather="copy" class="mr-2"></i> Copy Link
+                        </button>
                      </div>
                      <div class="card-bg-translucent rounded-lg border border-primary/20 p-4">
                         <h3 class="text-xl font-semibold gradient-text mb-3">Steps</h3>
@@ -564,6 +632,9 @@ Created this website
                   <a href="https://zenithub.pages.dev/pages/tool-pages/wavesai" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
                   <i data-feather="external-link" class="mr-2"></i> WaveAI
                   </a>
+                  <button onclick="copyLink('https://zenithub.pages.dev/pages/tool-pages/wavesai')" class="inline-flex items-center px-4 py-2 card-bg border border-primary/30 hover:border-primary/60 font-medium rounded-lg transition-all duration-200 ml-2" id="copyWave">
+                  <i data-feather="copy" class="mr-2"></i> Copy Link
+                  </button>
                </div>
             </div>
          </div>
@@ -573,10 +644,16 @@ Created this website
                <h1 class="page-title text-4xl md:text-5xl font-bold gradient-text mb-8">
                   <i data-feather="globe" class="inline mr-3"></i> Game Websites
                </h1>
-               <div class="mb-8 flex flex-wrap gap-4">
+               <div class="mb-4 flex flex-wrap gap-4">
                   <a href="https://docs.google.com/forms/d/e/1FAIpQLSfPwSzVQpF7Me2afUerf3Iv4FFQbkvWch5c9dpgk6SsSxPgvQ/viewform?usp=header" target="_blank" class="inline-flex items-center px-4 py-2 btn-danger font-medium rounded-lg">
                   <i data-feather="alert-triangle" class="mr-2"></i> Report Blocked Link
                   </a>
+               </div>
+               <!-- Pinned / Favorites -->
+               <div id="pinnedSection" class="mb-6 hidden">
+                  <h3 class="text-lg font-semibold gradient-text mb-3 flex items-center"><i data-feather="star" class="mr-2" style="width:18px;height:18px;"></i> Pinned Games</h3>
+                  <div id="pinnedList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-2"></div>
+                  <hr class="border-primary/20 mt-4">
                </div>
                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <a href="https://arras.netlify.app/#ed2261" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
@@ -891,6 +968,30 @@ Created this website
                               <button onclick="applyPreset('candy')" class="px-4 py-2 preset-candy rounded-lg">
                               Candy
                               </button>
+                              <button onclick="applyPreset('neon')" class="px-4 py-2 preset-neon rounded-lg">
+                              Neon
+                              </button>
+                              <button onclick="applyPreset('rosegold')" class="px-4 py-2 preset-rosegold rounded-lg">
+                              Rose Gold
+                              </button>
+                              <button onclick="applyPreset('arctic')" class="px-4 py-2 preset-arctic rounded-lg">
+                              Arctic
+                              </button>
+                              <button onclick="applyPreset('lava')" class="px-4 py-2 preset-lava rounded-lg">
+                              Lava
+                              </button>
+                              <button onclick="applyPreset('void')" class="px-4 py-2 preset-void rounded-lg">
+                              Void
+                              </button>
+                              <button onclick="applyPreset('cyber')" class="px-4 py-2 preset-cyber rounded-lg">
+                              Cyber
+                              </button>
+                              <button onclick="applyPreset('autumn')" class="px-4 py-2 preset-autumn rounded-lg">
+                              Autumn
+                              </button>
+                              <button onclick="applyPreset('aqua')" class="px-4 py-2 preset-aqua rounded-lg">
+                              Aqua
+                              </button>
                            </div>
                         </div>
                         <!-- Action Buttons -->
@@ -946,6 +1047,11 @@ Created this website
             </div>
          </div>
       </div>
+      <!-- Panic Button -->
+      <button id="panicBtn" onclick="window.location.href='https://mail.google.com/'" title="Panic! Go to Gmail"
+         class="fixed bottom-6 right-6 z-50 btn-danger px-4 py-3 rounded-xl font-bold shadow-lg flex items-center gap-2 hover:scale-105 transition-transform">
+         <i data-feather="alert-octagon"></i> Panic
+      </button>
       <script>
          feather.replace();
          
@@ -1000,6 +1106,62 @@ Created this website
                  backgroundColor: '#1f0529',
                  cardColor: '#2e1065',
                  textColor: '#fdf4ff'
+             },
+             neon: {
+                 primaryColor: '#22d3ee',
+                 secondaryColor: '#a3e635',
+                 backgroundColor: '#030712',
+                 cardColor: '#0f172a',
+                 textColor: '#f0fdf4'
+             },
+             rosegold: {
+                 primaryColor: '#f43f5e',
+                 secondaryColor: '#d4a373',
+                 backgroundColor: '#1c0a0e',
+                 cardColor: '#2d1219',
+                 textColor: '#fdf2f8'
+             },
+             arctic: {
+                 primaryColor: '#38bdf8',
+                 secondaryColor: '#a5f3fc',
+                 backgroundColor: '#0c1929',
+                 cardColor: '#0f2744',
+                 textColor: '#e0f2fe'
+             },
+             lava: {
+                 primaryColor: '#ef4444',
+                 secondaryColor: '#f97316',
+                 backgroundColor: '#1a0000',
+                 cardColor: '#2d0000',
+                 textColor: '#fff7ed'
+             },
+             void: {
+                 primaryColor: '#7c3aed',
+                 secondaryColor: '#a78bfa',
+                 backgroundColor: '#05010f',
+                 cardColor: '#0f0a1e',
+                 textColor: '#ede9fe'
+             },
+             cyber: {
+                 primaryColor: '#facc15',
+                 secondaryColor: '#4ade80',
+                 backgroundColor: '#020c01',
+                 cardColor: '#041a03',
+                 textColor: '#fefce8'
+             },
+             autumn: {
+                 primaryColor: '#d97706',
+                 secondaryColor: '#84cc16',
+                 backgroundColor: '#1c0f00',
+                 cardColor: '#2d1a00',
+                 textColor: '#fef3c7'
+             },
+             aqua: {
+                 primaryColor: '#06b6d4',
+                 secondaryColor: '#8b5cf6',
+                 backgroundColor: '#020e14',
+                 cardColor: '#051824',
+                 textColor: '#ecfeff'
              }
          };
          
@@ -1018,14 +1180,19 @@ Created this website
              });
              document.getElementById(pageId).classList.remove('hidden');
          
-             // Update sidebar active state
+             // Update sidebar active state — match by onclick so clicking the icon still works
              document.querySelectorAll('.sidebar-link').forEach(link => {
-                 link.classList.remove('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
+                 link.classList.remove('sidebar-active');
                  link.classList.add('hover:bg-gray-700/50');
              });
-         
-             event.target.classList.remove('hover:bg-gray-700/50');
-             event.target.classList.add('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
+             const activeLink = document.querySelector(`.sidebar-link[onclick="showPage('${pageId}')"]`);
+             if (activeLink) {
+                 activeLink.classList.remove('hover:bg-gray-700/50');
+                 activeLink.classList.add('sidebar-active');
+             }
+
+             // Re-render recently visited whenever home is shown
+             if (pageId === 'home') renderRecentlyVisited();
          }
          
          function applyTheme(theme) {
@@ -1247,12 +1414,141 @@ Created this website
              }
          });
          
+         // ── Favorites ──────────────────────────────────────────────────────
+         function getFavorites() {
+             return JSON.parse(localStorage.getItem('ntg_favorites') || '[]');
+         }
+         function saveFavorites(favs) {
+             localStorage.setItem('ntg_favorites', JSON.stringify(favs));
+         }
+         function isFavorite(url) {
+             return getFavorites().some(f => f.url === url);
+         }
+         function toggleFavorite(url, name) {
+             let favs = getFavorites();
+             if (isFavorite(url)) {
+                 favs = favs.filter(f => f.url !== url);
+             } else {
+                 favs.push({ url, name });
+             }
+             saveFavorites(favs);
+             renderFavoriteButtons();
+             renderPinnedSection();
+         }
+
+         function renderFavoriteButtons() {
+             document.querySelectorAll('#websites .grid a.game-card[data-url]').forEach(a => {
+                 const btn = a.querySelector('.fav-btn');
+                 if (!btn) return;
+                 const active = isFavorite(a.dataset.url);
+                 btn.innerHTML = active
+                     ? '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
+                     : '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+                 btn.style.color = active ? '#f59e0b' : 'rgba(209,213,219,0.5)';
+                 btn.title = active ? 'Unpin' : 'Pin to favorites';
+             });
+         }
+
+         function renderPinnedSection() {
+             const favs = getFavorites();
+             const section = document.getElementById('pinnedSection');
+             const list = document.getElementById('pinnedList');
+             if (!section || !list) return;
+             if (favs.length === 0) {
+                 section.classList.add('hidden');
+                 return;
+             }
+             section.classList.remove('hidden');
+             list.innerHTML = favs.map(f => `
+                 <a href="${f.url}" target="_blank" onclick="trackVisit('${f.url}','${f.name.replace(/'/g,"&#39;")}')"
+                    class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-yellow-500/40 hover:border-yellow-400/70 flex items-center justify-between group">
+                   <span class="flex items-center">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" class="mr-3 flex-shrink-0" style="color:#f59e0b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                     <span class="text-secondary group-hover:text-primary transition-colors">${f.name}</span>
+                   </span>
+                 </a>`).join('');
+         }
+
+         // Inject star buttons directly inside each game card <a> tag
+         function initGameCards() {
+             document.querySelectorAll('#websites .grid a.game-card').forEach(a => {
+                 const url = a.href;
+                 const nameEl = a.querySelector('span');
+                 const name = nameEl ? nameEl.textContent.trim() : url;
+
+                 // Store data on element
+                 a.dataset.url = url;
+                 a.dataset.name = name.toLowerCase();
+
+                 // Make card space out left content and the star
+                 a.classList.add('justify-between');
+
+                 // Track clicks
+                 a.addEventListener('click', e => {
+                     if (!e.defaultPrevented) trackVisit(url, name);
+                 });
+
+                 // Add star button inside the card
+                 const btn = document.createElement('button');
+                 btn.className = 'fav-btn ml-2 flex-shrink-0 transition-colors';
+                 btn.addEventListener('click', e => {
+                     e.preventDefault();
+                     e.stopPropagation();
+                     toggleFavorite(url, name);
+                 });
+                 a.appendChild(btn);
+             });
+             renderFavoriteButtons();
+             renderPinnedSection();
+         }
+
+         // ── Recently Visited ───────────────────────────────────────────────
+         function trackVisit(url, name) {
+             let recent = JSON.parse(localStorage.getItem('ntg_recent') || '[]');
+             recent = recent.filter(r => r.url !== url);
+             recent.unshift({ url, name, time: Date.now() });
+             recent = recent.slice(0, 3);
+             localStorage.setItem('ntg_recent', JSON.stringify(recent));
+         }
+
+         function renderRecentlyVisited() {
+             const recent = JSON.parse(localStorage.getItem('ntg_recent') || '[]');
+             const list = document.getElementById('recentlyVisitedList');
+             const empty = document.getElementById('recentlyVisitedEmpty');
+             if (!list) return;
+             if (recent.length === 0) {
+                 list.innerHTML = '';
+                 if (empty) empty.style.display = '';
+                 return;
+             }
+             if (empty) empty.style.display = 'none';
+             list.innerHTML = recent.map(r => `
+                 <a href="${r.url}" target="_blank" onclick="trackVisit('${r.url}','${r.name.replace(/'/g,"&#39;")}')"
+                    class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3 flex-shrink-0" style="color:#f97316"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                   <span class="text-secondary group-hover:text-primary transition-colors text-sm truncate">${r.name}</span>
+                 </a>`).join('');
+         }
+         function copyLink(url) {
+             navigator.clipboard.writeText(url).then(() => {
+                 // Find button by checking which one called this with the url
+                 document.querySelectorAll('[onclick^="copyLink"]').forEach(btn => {
+                     if (btn.getAttribute('onclick').includes(url.replace(/'/g,"\\'"))) {
+                         const orig = btn.innerHTML;
+                         btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+                         btn.style.color = '#10b981';
+                         setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; feather.replace(); }, 2000);
+                     }
+                 });
+             });
+         }
+
          // ensure Home visible on load
          window.onload = () => {
              showPage('home');
-             document.querySelector('.sidebar-link').classList.add('bg-gradient-to-r', 'from-purple-600/20', 'to-orange-600/20', 'border', 'border-purple-500/30');
-             document.querySelector('.sidebar-link').classList.remove('hover:bg-gray-700/50');
              feather.replace();
+             initGameCards();
+             renderRecentlyVisited();
          };
       </script>
    </body>
