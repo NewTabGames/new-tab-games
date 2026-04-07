@@ -369,7 +369,7 @@
       <!-- Floating version badge -->
       <div class="version-badge fixed top-4 right-6 flex items-center gap-2 z-50 text-xl font-bold">
          <span class="dot w-3 h-3 rounded-full"></span>
-         <span class="gradient-text ver-text">v6.7.4</span>
+         <span class="gradient-text ver-text">v6.7.5</span>
       </div>
       <!-- Main Content -->
       <div class="ml-64 p-8 min-h-screen relative z-0">
@@ -410,7 +410,7 @@
                   </h3>
                   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                      <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
-                        <div class="gradient-text text-2xl font-bold">35+</div>
+                        <div class="gradient-text text-2xl font-bold">28+</div>
                         <div class="text-secondary text-sm">Links Available</div>
                      </div>
                      <div class="text-center p-3 card-bg-translucent rounded-lg border border-primary/20">
@@ -454,12 +454,11 @@
                      <h3 class="gradient-text">Recent Updates</h3>
                      <ul class="space-y-4">
                         <li>
-                           <span class="font-bold gradient-text">3/15/26 - v6.7.4</span>
+                           <span class="font-bold gradient-text">4/7/26 - v6.7.5</span>
                            <ul class="ml-6 list-disc text-secondary">
-                              <li>Added Recently Visited List</li>
-							  <li>Added Favorites System</li>
-							  <li>Added 8 More Themes</li>
-							  <li>Added Panic Button (Gmail)</li>
+                              <li>Updated Bing Copilot link</li>
+                              <li>Added Britannica AI</li>
+                              <li>Added The Oregon Trail</li>
                            </ul>
                         </li>
                      </ul>
@@ -589,6 +588,11 @@ Created this website
 - Added Favorites System
 - Added 8 More Themes
 - Added Panic Button (Gmail)
+4/7/26 - v6.7.5
+- Added Homework Tracker - Netlify button
+- Updated Bing Copilot link
+- Added Britannica AI
+- Added The Oregon Trail
                         </pre>
                   </div>
                </div>
@@ -601,40 +605,38 @@ Created this website
                   <i data-feather="cpu" class="inline mr-3"></i> AI Method
                </h1>
                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                     <div>
-                        <p class="text-lg text-secondary leading-relaxed mb-6">
-                           Follow this method to use CoPilot AI
-                        </p>
-                        <a href="https://www.bing.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
-                        <i data-feather="external-link" class="mr-2"></i> Open Bing
-                        </a>
-                        <button onclick="copyLink('https://www.bing.com/')" class="inline-flex items-center px-4 py-2 card-bg border border-primary/30 hover:border-primary/60 font-medium rounded-lg transition-all duration-200 ml-2" id="copyBing">
-                        <i data-feather="copy" class="mr-2"></i> Copy Link
-                        </button>
-                     </div>
-                     <div class="card-bg-translucent rounded-lg border border-primary/20 p-4">
-                        <h3 class="text-xl font-semibold gradient-text mb-3">Steps</h3>
-                        <ol class="list-decimal ml-5 space-y-2 text-secondary">
-                           <li>Open Bing.</li>
-                           <li>Type your question (do not click Copilot directly).</li>
-                           <li>Click the Copilot Search button after searching.</li>
-                           <li>Now you can freely talk to Copilot.</li>
-                        </ol>
-                     </div>
-                  </div>
+                  <h2 class="text-2xl font-bold gradient-text mb-3">Copilot (Bing)</h2>
+                  <p class="text-lg text-secondary leading-relaxed mb-6">
+                     Direct link to Copilot Search on Bing.
+                  </p>
+                  <a href="https://www.bing.com/copilotsearch?q=&FORM=CSSCOP" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
+                  <i data-feather="external-link" class="mr-2"></i> Open Bing
+                  </a>
+                  <button onclick="copyLink('https://www.bing.com/copilotsearch?q=&FORM=CSSCOP')" class="inline-flex items-center px-4 py-2 card-bg border border-primary/30 hover:border-primary/60 font-medium rounded-lg transition-all duration-200 ml-2" id="copyBing">
+                  <i data-feather="copy" class="mr-2"></i> Copy Link
+                  </button>
                </div>
                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mt-6">
-                  <h2 class="text-2xl font-bold gradient-text mb-4">
-                     AI Method 2
-                  </h2>
+                  <h2 class="text-2xl font-bold gradient-text mb-3">WaveAI</h2>
                   <p class="text-lg text-secondary leading-relaxed mb-6">
-                     This is Wave's AI
+                     This is Wave's AI.
                   </p>
                   <a href="https://zenithub.pages.dev/pages/tool-pages/wavesai" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
                   <i data-feather="external-link" class="mr-2"></i> WaveAI
                   </a>
                   <button onclick="copyLink('https://zenithub.pages.dev/pages/tool-pages/wavesai')" class="inline-flex items-center px-4 py-2 card-bg border border-primary/30 hover:border-primary/60 font-medium rounded-lg transition-all duration-200 ml-2" id="copyWave">
+                  <i data-feather="copy" class="mr-2"></i> Copy Link
+                  </button>
+               </div>
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mt-6">
+                  <h2 class="text-2xl font-bold gradient-text mb-3">Britannica AI</h2>
+                  <p class="text-lg text-secondary leading-relaxed mb-6">
+                     Britannica's built-in AI chatbot.
+                  </p>
+                  <a href="https://www.britannica.com/chatbot" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
+                  <i data-feather="external-link" class="mr-2"></i> Britannica AI
+                  </a>
+                  <button onclick="copyLink('https://www.britannica.com/chatbot')" class="inline-flex items-center px-4 py-2 card-bg border border-primary/30 hover:border-primary/60 font-medium rounded-lg transition-all duration-200 ml-2" id="copyBritannica">
                   <i data-feather="copy" class="mr-2"></i> Copy Link
                   </button>
                </div>
@@ -726,6 +728,10 @@ Created this website
                   <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
                   <span class="text-secondary group-hover:text-primary transition-colors">Duck With Goose Skin</span>
                   </a>
+                  <a href="https://oregontrail.ws/games/the-oregon-trail/play/" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
+                  <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
+                  <span class="text-secondary group-hover:text-primary transition-colors">The Oregon Trail</span>
+                  </a>
                   <a href="https://sites.google.com/view/dominumnetworkv2/dnv2?authuser=0" target="_blank" class="game-card card-bg-translucent backdrop-blur-sm p-4 rounded-lg border border-primary/30 hover:border-primary/50 flex items-center group">
                   <i data-feather="play" class="text-purple-400 mr-3 group-hover:text-orange-400 transition-colors"></i>
                   <span class="text-secondary group-hover:text-primary transition-colors">DNV2</span>
@@ -773,7 +779,7 @@ Created this website
                      <div class="card-bg-translucent p-4 rounded-lg border border-primary/20">
                         <div class="gradient-text text-2xl mb-2">3</div>
                         <h4 class="font-semibold mb-2">Enjoy</h4>
-                        <p class="text-secondary text-sm">Browse safely with your cloaked tabs</p>
+                        <p class="text-secondary text-sm">Now your tabs are cloaked</p>
                      </div>
                   </div>
                </div>
@@ -873,7 +879,7 @@ Created this website
                      This tool lets you add assignments and the date for when it is due.
                   </p>
                   <p class="text-xs text-secondary mt-2 opacity-50">
-                     (I use this all the time)
+					 (I use this all the time)
                   </p>
                </div>
                <!-- Advertisement for External Tool -->
@@ -881,9 +887,14 @@ Created this website
                   <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-secondary to-primary"></div>
                   <h2 class="text-2xl font-bold text-secondary mb-4">Homework Tracker Link</h2>
                   <p class="text-secondary mb-6">Organize your homework lil bro 💔</p>
-                  <a href="https://raw.githack.com/NewTabGames/Homework/main/index.html" target="_blank" class="inline-flex items-center px-8 py-4 btn-gradient font-bold rounded-xl shadow-lg transform hover:scale-105 transition-transform">
-                  <i data-feather="external-link" class="mr-3"></i> Open Homework Tracker
-                  </a>
+                  <div class="flex flex-wrap justify-center gap-4">
+                     <a href="https://raw.githack.com/NewTabGames/Homework/main/index.html" target="_blank" class="inline-flex items-center px-8 py-4 btn-gradient font-bold rounded-xl shadow-lg transform hover:scale-105 transition-transform">
+                     <i data-feather="external-link" class="mr-3"></i> Open Homework Tracker - Githack
+                     </a>
+                     <a href="https://hmwk-tracker.netlify.app/" target="_blank" class="inline-flex items-center px-8 py-4 btn-gradient font-bold rounded-xl shadow-lg transform hover:scale-105 transition-transform">
+                     <i data-feather="external-link" class="mr-3"></i> Open Homework Tracker - Netlify
+                     </a>
+                  </div>
                </div>
             </div>
          </div>
