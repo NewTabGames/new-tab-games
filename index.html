@@ -342,12 +342,15 @@
                <button onclick="showPage('updates')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
                <i data-feather="clock" class="mr-3"></i> Update Log
                </button>
-               <button onclick="showPage('aimethod')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-               <i data-feather="cpu" class="mr-3"></i> AI Method
-               </button>
-               <button onclick="showPage('websites')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
-               <i data-feather="globe" class="mr-3"></i> Game Websites
-               </button>
+                <button onclick="showPage('aimethod')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+                <i data-feather="cpu" class="mr-3"></i> AI Method
+                </button>
+                <button onclick="showPage('proxies')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+                <i data-feather="globe" class="mr-3"></i> Proxies
+                </button>
+                <button onclick="showPage('websites')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
+                <i data-feather="globe" class="mr-3"></i> Game Websites
+                </button>
                <button onclick="showPage('tabcloaker')" class="sidebar-link w-full text-left py-3 px-4 rounded-lg transition-all duration-300 flex items-center hover:bg-gray-700/50">
                <i data-feather="eye-off" class="mr-3"></i> Tab Cloaker
                </button>
@@ -630,22 +633,18 @@ Created this website
                   <i data-feather="copy" class="mr-2"></i> Copy Link
                   </button>
                </div>
-               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mt-6">
-                  <h2 class="text-2xl font-bold gradient-text mb-3">Britannica AI</h2>
+            </div>
+         </div>
+         <!-- Proxies -->
+         <div id="proxies" class="page hidden">
+            <div class="page-with-title max-w-4xl mx-auto">
+               <h1 class="page-title text-4xl md:text-5xl font-bold gradient-text mb-8">
+                  <i data-feather="globe" class="inline mr-3"></i> Proxies
+               </h1>
+               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
+                  <h2 class="text-2xl font-bold gradient-text mb-3">Proxy List</h2>
                   <p class="text-lg text-secondary leading-relaxed mb-6">
-                     Britannica's built-in AI chatbot.
-                  </p>
-                  <a href="https://www.britannica.com/chatbot" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
-                  <i data-feather="external-link" class="mr-2"></i> Britannica AI
-                  </a>
-                  <button onclick="copyLink('https://www.britannica.com/chatbot')" class="inline-flex items-center px-4 py-2 card-bg border border-primary/30 hover:border-primary/60 font-medium rounded-lg transition-all duration-200 ml-2" id="copyBritannica">
-                  <i data-feather="copy" class="mr-2"></i> Copy Link
-                  </button>
-               </div>
-               <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30 mt-6">
-                  <h2 class="text-2xl font-bold gradient-text mb-3">Proxies</h2>
-                  <p class="text-lg text-secondary leading-relaxed mb-6">
-                     A proxy opens websites through another route, which can help when a page is blocked on your network. Pick one from the list below, and for AI access we recommend using duck.ai when possible.
+                     A proxy opens websites through another route, which can help when a page is blocked on your network. Some proxies cannot access duck.ai, so if one does not work for duck.ai, use an alternative website instead.
                   </p>
                   <div class="space-y-6">
                      <div>
@@ -717,9 +716,6 @@ Created this website
                         <div class="flex flex-wrap gap-3">
                            <a href="https://s3.amazonaws.com/ghst/index.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
                            <i data-feather="external-link" class="mr-2"></i> AWS Link
-                           </a>
-                           <a href="https://ghst.s3.us-east-1.amazonaws.com/index.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
-                           <i data-feather="external-link" class="mr-2"></i> US East Link
                            </a>
                         </div>
                      </div>
@@ -1292,7 +1288,7 @@ Created this website
              // Re-render recently visited whenever home is shown
              if (pageId === 'home') renderRecentlyVisited();
          }
-         
+
          function applyTheme(theme) {
              // Set CSS variables
              document.documentElement.style.setProperty('--primary-color', theme.primaryColor);
