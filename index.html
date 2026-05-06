@@ -460,6 +460,7 @@
                            <span class="font-bold gradient-text">5/4/26 - v6.7.8</span>
                            <ul class="ml-6 list-disc text-secondary">
                               <li>Fixed performance bugs</li>
+							  <li>Added some more Proxy links</li>
                            </ul>
                         </li>
                      </ul>
@@ -604,6 +605,7 @@ Created this website
 - Added infinite wordle
 5/4/26 - v6.7.8
 - Fixed performance bugs
+- Added some more Proxy links
                         </pre>
                   </div>
                </div>
@@ -647,11 +649,10 @@ Created this website
                <h1 class="page-title text-4xl md:text-5xl font-bold gradient-text mb-8">
                   <i data-feather="globe" class="inline mr-3"></i> Proxies
                </h1>
+               <p class="text-lg text-secondary leading-relaxed mb-6">
+                  A proxy opens websites through another route, which can help when a page is blocked on your network. Most proxies like to sometimes not work, so if one does not work for duck.ai, use an alternative website instead. (For some reason, some of the proxies will not let you load duck.ai, and maybe an hour or 2 later they will. Just try them all.)
+               </p>
                <div class="card-bg-translucent backdrop-blur-sm p-6 rounded-xl border border-primary/30">
-                  <h2 class="text-2xl font-bold gradient-text mb-3">Proxy List</h2>
-                  <p class="text-lg text-secondary leading-relaxed mb-6">
-                     A proxy opens websites through another route, which can help when a page is blocked on your network. Some proxies cannot access duck.ai, so if one does not work for duck.ai, use an alternative website instead.
-                  </p>
                   <div class="space-y-6">
                      <div>
                         <h3 class="text-lg font-semibold text-primary mb-3">DayDreamx</h3>
@@ -710,6 +711,24 @@ Created this website
                         <div class="flex flex-wrap gap-3">
                            <a href="https://sealgodsarcade.onrender.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
                            <i data-feather="external-link" class="mr-2"></i> Seal Gods Arcade
+                           </a>
+                           <a href="https://nebulaunblocking.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
+                           <i data-feather="external-link" class="mr-2"></i> nebulaunblocking
+                           </a>
+                           <a href="https://studentlearning.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
+                           <i data-feather="external-link" class="mr-2"></i> studentlearning
+                           </a>
+                           <a href="https://youwannaknowwhatelseismassive.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
+                           <i data-feather="external-link" class="mr-2"></i> youwannaknowwhatelseismassive
+                           </a>
+                           <a href="https://a7k3m9p2xq9z1b6n4c8th2j7s5v0ldq8w1e.vercel.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
+                           <i data-feather="external-link" class="mr-2"></i> a7k3m9p2xq9z1b6n4
+                           </a>
+                           <a href="https://femboymaths.onrender.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
+                           <i data-feather="external-link" class="mr-2"></i> Maths Hub
+                           </a>
+                           <a href="https://d4rtzzzsiu8gdr.onrender.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-4 py-2 btn-gradient font-medium rounded-lg">
+                           <i data-feather="external-link" class="mr-2"></i> d4rtzzzsiu8gdr
                            </a>
                         </div>
                      </div>
@@ -1080,7 +1099,7 @@ Created this website
                         </div>
                         <!-- Action Buttons -->
                         <div class="flex space-x-4 pt-4">
-                           <button onclick="saveTheme()" class="px-6 py-3 btn-success font-bold rounded-lg">
+                           <button onclick="saveTheme(event)" class="px-6 py-3 btn-success font-bold rounded-lg">
                            <i data-feather="save" class="inline mr-2"></i> Save Theme
                            </button>
                            <button onclick="resetTheme()" class="px-6 py-3 card-bg text-primary font-bold rounded-lg hover:bg-gray-600 transition-all duration-300">
@@ -1329,7 +1348,8 @@ Created this website
            --secondary-color: ${theme.secondaryColor};
            --background-color: ${theme.backgroundColor};
            --card-color: ${theme.cardColor};
-           --text-color: ${theme.textColor}`;
+           --text-color: ${theme.textColor};
+}`;
              }
          }
          
@@ -1360,7 +1380,7 @@ Created this website
              document.getElementById('textColorHex').value = currentTheme.textColor;
          }
          
-         function saveTheme() {
+         function saveTheme(event) {
              currentTheme = {
                  primaryColor: document.getElementById('primaryColor').value,
                  secondaryColor: document.getElementById('secondaryColor').value,
